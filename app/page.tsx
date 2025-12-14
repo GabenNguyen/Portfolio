@@ -111,24 +111,53 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.0, duration: 0.5 }}
-                className="flex items-center gap-2 text-lg font-medium mt-4"
+                className="flex items-center gap-6 mt-6"
               >
-                <div className="flex justify-around space-x-5">
-                  <Link
-                    href="https://github.com/GabenNguyen"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {/* GitHub */}
+                <Link
+                  href="https://github.com/GabenNguyen"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.08 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-2xl
+                              bg-white/5 backdrop-blur-md border border-white/10
+                              shadow-lg hover:shadow-xl transition-all"
                   >
-                    <BiLogoGithub className="h-8 w-8 text-gray-600 hover:text-gray-900 transition-colors" />
-                  </Link>
-                  <Link
-                    href="www.linkedin.com/in/bahoanguyen"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {/* glow */}
+                    <div
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity
+                                    bg-linear-to-br from-purple-500/30 to-indigo-500/30 blur-md"
+                    />
+
+                    <BiLogoGithub className="relative h-6 w-6 text-foreground/80 group-hover:text-white transition-colors" />
+                  </motion.div>
+                </Link>
+
+                {/* LinkedIn */}
+                <Link
+                  href="https://www.linkedin.com/in/bahoanguyen/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1.08 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-2xl
+                              bg-white/5 backdrop-blur-md border border-white/10
+                              shadow-lg hover:shadow-xl transition-all"
                   >
-                    <BiLogoLinkedin className="h-8 w-8 text-blue-600 hover:text-blue-800 transition-colors" />
-                  </Link>
-                </div>
+                    {/* glow */}
+                    <div
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity
+                                    bg-linear-to-br from-blue-500/30 to-cyan-500/30 blur-md"
+                    />
+
+                    <BiLogoLinkedin className="relative h-6 w-6 text-foreground/80 group-hover:text-white transition-colors" />
+                  </motion.div>
+                </Link>
               </motion.div>
             </div>
 
@@ -208,7 +237,7 @@ const HomePage = () => {
                     src={profileImg}
                     alt="Profile"
                     fill
-                    className="object-cover"
+                    className="object-contain scale-130"
                     quality={100}
                   />
                 </motion.div>
