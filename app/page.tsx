@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MoveUpRight } from "lucide-react";
+import { Phone, Mail, MoveUpRight, FolderOpen, FileUser } from "lucide-react";
 import { BiLogoGithub, BiLogoLinkedin } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
@@ -33,7 +33,7 @@ const HomePage = () => {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="text-2xl md:text-5xl font-bold mb-6"
               >
-                Hi! My name is Ba Hoa (Gaben) NGUYEN
+                Hi! My name is Ba Hoa (Gavin) NGUYEN
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -84,14 +84,34 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.0, duration: 0.5 }}
               >
-                <Link href="/contact">
-                  <Button
-                    size="default"
-                    className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
-                  >
-                    Let&apos;s Connect <MoveUpRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
+                <div className="flex items-center gap-3">
+                  <Link href="/contact">
+                    <Button
+                      size="default"
+                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
+                    >
+                      Let&apos;s Connect <MoveUpRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+
+                  <Link href="/about">
+                    <Button
+                      size="default"
+                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
+                    >
+                      More about me <FileUser className="h-4 w-4" />
+                    </Button>
+                  </Link>
+
+                  <Link href="/project">
+                    <Button
+                      size="default"
+                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150 flex items-center gap-2"
+                    >
+                      View My Projects <FolderOpen className="h-6 w-6" />
+                    </Button>
+                  </Link>
+                </div>
               </motion.div>
 
               <motion.div
