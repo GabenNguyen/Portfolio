@@ -77,6 +77,7 @@ const AboutPage = () => {
       {/* Floating shapes */}
       {[...Array(8)].map((_, i) => (
         <motion.div
+          suppressHydrationWarning
           key={i}
           animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 8 + i, delay: i }}
@@ -99,7 +100,7 @@ const AboutPage = () => {
           About Me
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -122,7 +123,7 @@ const AboutPage = () => {
           , I am eager to contribute by delivering professional,
           customer-focused service and client support both in person and in a
           digital environment.
-        </motion.p>
+        </motion.div>
 
         {/* soft skills */}
         <motion.div
