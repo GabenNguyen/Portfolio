@@ -30,7 +30,7 @@ function NavBar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
             <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Gavin NGUYEN
+              Gaben NGUYEN
             </span>
           </Link>
 
@@ -61,7 +61,7 @@ function NavBar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Right Section: Mode Toggle + Auth Buttons */}
+          {/* Right Section: Mode Toggle + Download CV button */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-4">
               {/* Download CV Button */}
