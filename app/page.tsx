@@ -33,7 +33,7 @@ const HomePage = () => {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="text-2xl md:text-5xl font-bold mb-6"
               >
-                Hi! My name is Ba Hoa (Gavin) NGUYEN
+                Hi! My name is Ba Hoa (Gaben) NGUYEN
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
