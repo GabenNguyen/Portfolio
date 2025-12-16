@@ -34,6 +34,27 @@ const experiences = [
   },
 ];
 
+const projects = [
+  {
+    title: "AI Quiz Generator",
+    slug: "/project",
+    tech: [
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "Clerk",
+      "TypeScript",
+      "Gemini API",
+      "Framer Motion",
+    ],
+  },
+  {
+    title: "Personal Portfolio",
+    slug: "/project",
+    tech: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
+  },
+];
+
 const hobbies = [
   "Gaming",
   "Reading Tech Blogs",
@@ -68,7 +89,7 @@ const AboutPage = () => {
       ))}
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 flex flex-col items-center gap-12 text-center relative z-10">
+      <section className="container mx-auto px-4 py-24 flex flex-col items-center gap-12 text-left relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,15 +103,25 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-xl text-muted-foreground max-w-3xl"
+          className="bg-white/80 dark:bg-gray-900/80 p-6 rounded-2xl shadow-md max-w-3xl w-full text-left backdrop-blur-sm border border-gray-200 dark:border-gray-800"
         >
-          Hi! I&apos;m{" "}
-          <span className="font-semibold text-blue-500">
-            Ba Hoa (Gaben) Nguyen
+          <h2 className="text-2xl font-bold mb-4">Professional Profile</h2>
+          Motivated Information Technology student, currently pursuing the
+          Bachelor of Information Technology at the University of South
+          Australia. Strong{" "}
+          <span className="font-bold text-blue-500">communication skills</span>,
+          combined with a{" "}
+          <span className="font-bold text-blue-500">solid IT background</span>{" "}
+          and experience in digital technologies. Quick to learn and adapt to in
+          fast-paced environments and new systems, with proven experience
+          delivering client support and clear explanations in face-to-face
+          settings. With a{" "}
+          <span className="font-bold text-blue-500">
+            positive mindset, resilience and commitment to lifelong learning
           </span>
-          , a sophomore at Adelaide University with a focus on web development
-          and software engineering. I enjoy building performant, user-friendly
-          applications while exploring new technologies.
+          , I am eager to contribute by delivering professional,
+          customer-focused service and client support both in person and in a
+          digital environment.
         </motion.p>
 
         {/* soft skills */}
@@ -186,11 +217,56 @@ const AboutPage = () => {
             {experiences.map((exp) => (
               <li key={exp.title}>
                 <p className="font-semibold text-lg">
-                  {exp.title} U+2013 {exp.company}
+                  {exp.title} - {exp.company}
                 </p>
                 <p className="text-sm text-muted-foreground">{exp.duration}</p>
                 <p className="text-base mt-1">{exp.description}</p>
               </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* Projects */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+          className="max-w-3xl w-full"
+        >
+          <h2 className="text-2xl font-bold mb-4">Projects</h2>
+
+          <ul className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/80 dark:bg-gray-900/80 rounded-2xl border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
+            {projects.map((project, i) => (
+              <motion.li
+                key={project.title}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.08 }}
+              >
+                <a
+                  href={project.slug}
+                  className="flex items-center justify-between p-5 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 transition-colors"
+                >
+                  <div>
+                    <p className="text-lg font-semibold">{project.title}</p>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold">
+                    View →
+                  </span>
+                </a>
+              </motion.li>
             ))}
           </ul>
         </motion.div>
