@@ -29,10 +29,22 @@ const experiences = [
     title: "English Tutor",
     company: "Self-employed",
     duration: "Aug 2022 - Aug 2023",
-    description:
-      "Helped high-school students achieve top scores in Engish exams and other proficiency tests such as Cambridge MOVERS, FLYERS, etc",
+    description: [
+      "Delivered personalised, result-driven lessons tailored to individual learning goals.",
+      "Explained complex concepts clearly and confidently in a simple, supportive manner.",
+      "Helped students achieve strong exam results and measurable proficiency improvements.",
+      "Adapted quickly to diverse student needs while maintaining a positive learning experience.",
+      "Maintained accuracy and attention to detail when tracking student progress.",
+      "Organised and managed multiple teaching sessions, demonstrating strong time management and reliability.",
+    ],
+    achievement: [
+      "Significantly improved students' English skills, with many achieving top scores (9/10) in high school exams.",
+      "Supported students to attain top results in the Cambridge FLYERS English proficiency test, with many scoring 4/5 across all sections.",
+
+    ],
   },
 ];
+
 
 const projects = [
   {
@@ -221,7 +233,18 @@ const AboutPage = () => {
                   {exp.title} - {exp.company}
                 </p>
                 <p className="text-sm text-muted-foreground">{exp.duration}</p>
-                <p className="text-base mt-1">{exp.description}</p>
+                <p className="text-md mt-3 font-bold">Key responsibilities</p>
+                <ul className="mt-3 list-disc pl-5 space-y-2 text-base">
+                  {exp.description.map((point, index) => (
+                    <li key={index}>{point}</li>
+                  ))}
+                </ul>
+                <p className="text-md mt-3 font-bold">Achievements</p>
+                <ul className="mt-3 list-disc pl-5 space-y-2 text-base">
+                  {exp.achievement.map((achievement, index) => (
+                    <li key={index}>{achievement}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
