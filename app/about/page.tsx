@@ -40,11 +40,9 @@ const experiences = [
     achievement: [
       "Significantly improved students' English skills, with many achieving top scores (9/10) in high school exams.",
       "Supported students to attain top results in the Cambridge FLYERS English proficiency test, with many scoring 4/5 across all sections.",
-
     ],
   },
 ];
-
 
 const projects = [
   {
@@ -78,22 +76,20 @@ const hobbies = [
 const AboutPage = () => {
   return (
     <main className="relative min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-hidden">
-      {/* Animated background */}
+      {/* Background Gradients */}
       <motion.div
         suppressHydrationWarning
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
         className="absolute inset-0 bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 opacity-20 dark:from-gray-700 dark:via-gray-900 dark:to-gray-800 blur-3xl pointer-events-none"
       />
-
-      {/* Floating shapes */}
       {[...Array(8)].map((_, i) => (
         <motion.div
           suppressHydrationWarning
           key={i}
-          animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 8 + i, delay: i }}
-          className={`absolute w-16 h-16 rounded-full bg-blue-300/20 dark:bg-purple-700/20`}
+          animate={{ y: [0, 25, 0], x: [0, 15, 0] }}
+          transition={{ repeat: Infinity, duration: 10 + i, delay: i }}
+          className="absolute w-20 h-20 rounded-full bg-blue-300/20 dark:bg-purple-700/20"
           style={{
             top: `${Math.random() * 90}%`,
             left: `${Math.random() * 90}%`,
@@ -102,12 +98,12 @@ const AboutPage = () => {
       ))}
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 flex flex-col items-center gap-12 text-left relative z-10">
+      <section className="container mx-auto px-4 py-28 flex flex-col items-center gap-12 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold"
+          className="text-5xl md:text-6xl font-bold text-center"
         >
           About Me
         </motion.h1>
@@ -116,7 +112,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-white/80 dark:bg-gray-900/80 p-6 rounded-2xl shadow-md max-w-3xl w-full text-left backdrop-blur-sm border border-gray-200 dark:border-gray-800"
+          className="bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl max-w-3xl w-full backdrop-blur-xl border border-gray-200 dark:border-gray-800"
         >
           <h2 className="text-2xl font-bold mb-4">Professional Profile</h2>
           Motivated Information Technology student, currently pursuing the
@@ -137,7 +133,7 @@ const AboutPage = () => {
           digital environment.
         </motion.div>
 
-        {/* soft skills */}
+        {/* Soft Skills */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,10 +145,10 @@ const AboutPage = () => {
             {softSkills.map((skill, skillIndex) => (
               <motion.div
                 key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: skillIndex * 0.05 }}
-                className="px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold shadow-md hover:scale-105 transition-transform cursor-default"
+                className="px-5 py-2 rounded-full bg-linear-to-r from-green-200 to-green-300 dark:from-green-900 dark:to-green-800 text-green-800 dark:text-green-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
               >
                 {skill}
               </motion.div>
@@ -160,7 +156,7 @@ const AboutPage = () => {
           </div>
         </motion.div>
 
-        {/* technical skills */}
+        {/* Technical Skills */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,10 +168,10 @@ const AboutPage = () => {
             {technicalSkills.map((skill, skillIndex) => (
               <motion.div
                 key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: skillIndex * 0.05 }}
-                className="px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 font-semibold shadow-md hover:scale-105 transition-transform cursor-default"
+                className="px-5 py-2 rounded-full bg-linear-to-r from-blue-200 to-blue-400 dark:from-blue-900 dark:to-blue-700 text-blue-800 dark:text-blue-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
               >
                 {skill}
               </motion.div>
@@ -188,7 +184,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="bg-white/80 dark:bg-gray-900/80 p-6 rounded-2xl shadow-md max-w-3xl w-full text-left backdrop-blur-sm border border-gray-200 dark:border-gray-800"
+          className="bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl max-w-3xl w-full backdrop-blur-xl border border-gray-200 dark:border-gray-800"
         >
           <h2 className="text-2xl font-bold mb-4">Education</h2>
           <ul className="space-y-3 text-lg">
@@ -223,7 +219,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="max-w-3xl w-full bg-white/80 dark:bg-gray-900/80 p-6 rounded-2xl shadow-md text-left backdrop-blur-sm border border-gray-200 dark:border-gray-800"
+          className="max-w-3xl w-full bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl text-left backdrop-blur-xl border border-gray-200 dark:border-gray-800"
         >
           <h2 className="text-2xl font-bold mb-4">Experience</h2>
           <ul className="space-y-4">
@@ -259,7 +255,7 @@ const AboutPage = () => {
         >
           <h2 className="text-2xl font-bold mb-4">Projects</h2>
 
-          <ul className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/80 dark:bg-gray-900/80 rounded-2xl border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
+          <ul className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/70 dark:bg-gray-900/70 rounded-3xl border border-gray-200 dark:border-gray-800 backdrop-blur-xl">
             {projects.map((project, i) => (
               <motion.li
                 key={project.title}
@@ -269,11 +265,10 @@ const AboutPage = () => {
               >
                 <a
                   href={project.slug}
-                  className="flex items-center justify-between p-5 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 transition-colors"
+                  className="flex items-center justify-between p-5 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 transition-colors rounded-3xl"
                 >
                   <div>
                     <p className="text-lg font-semibold">{project.title}</p>
-
                     <div className="flex flex-wrap gap-2 mt-2">
                       {project.tech.map((tech) => (
                         <span
@@ -285,7 +280,6 @@ const AboutPage = () => {
                       ))}
                     </div>
                   </div>
-
                   <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold">
                     View →
                   </span>
@@ -307,10 +301,10 @@ const AboutPage = () => {
             {hobbies.map((hobby, i) => (
               <motion.div
                 key={hobby}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className="px-4 py-2 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 font-semibold shadow-md hover:scale-105 transition-transform cursor-default"
+                className="px-5 py-2 rounded-full bg-linear-to-r from-pink-200 to-pink-300 dark:from-pink-900 dark:to-pink-700 text-pink-800 dark:text-pink-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
               >
                 {hobby}
               </motion.div>
