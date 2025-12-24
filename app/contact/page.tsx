@@ -44,7 +44,7 @@ const ContactPage = () => {
       <motion.div
         animate={{ opacity: [0.4, 0.6, 0.4] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-purple-200/30 to-pink-200/30 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-gray-900 blur-3xl"
+        className="absolute inset-0 bg-linear-to-br from-blue-200/30 via-purple-200/30 to-pink-200/30 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-gray-900 blur-3xl"
       />
 
       {/* Content */}
