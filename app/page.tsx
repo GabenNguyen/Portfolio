@@ -88,7 +88,7 @@ const HomePage = () => {
                   <Link href="/contact">
                     <Button
                       size="default"
-                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
+                      className="cursor-pointer hover:-translate-y-2 px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
                     >
                       Let&apos;s Connect <MoveUpRight className="h-4 w-4" />
                     </Button>
@@ -97,7 +97,7 @@ const HomePage = () => {
                   <Link href="/about">
                     <Button
                       size="default"
-                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
+                      className="cursor-pointer hover:-translate-y-2 px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150"
                     >
                       More about me <FileUser className="h-4 w-4" />
                     </Button>
@@ -106,7 +106,7 @@ const HomePage = () => {
                   <Link href="/project">
                     <Button
                       size="default"
-                      className="cursor-pointer px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150 flex items-center gap-2"
+                      className="cursor-pointer hover:-translate-y-2 px-10 py-6 text-xl font-semibold rounded-2xl hover:bg-gray-500 active:scale-95 transition-transform duration-150 flex items-center gap-2"
                     >
                       View My Projects <FolderOpen className="h-6 w-6" />
                     </Button>
@@ -140,11 +140,10 @@ const HomePage = () => {
                   rel="noopener noreferrer"
                 >
                   <motion.div
-                    whileHover={{ y: -4, scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
                     className="group relative flex items-center justify-center w-12 h-12 rounded-2xl
                               bg-white/5 backdrop-blur-md border border-white/10
-                              shadow-lg hover:shadow-xl transition-all"
+                              shadow-lg hover:shadow-xl transition-all hover:scale-125"
                   >
                     {/* glow */}
                     <div
@@ -163,11 +162,10 @@ const HomePage = () => {
                   rel="noopener noreferrer"
                 >
                   <motion.div
-                    whileHover={{ y: -4, scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
                     className="group relative flex items-center justify-center w-12 h-12 rounded-2xl
                               bg-white/5 backdrop-blur-md border border-white/10
-                              shadow-lg hover:shadow-xl transition-all"
+                              shadow-lg hover:shadow-xl transition-all hover:scale-125"
                   >
                     {/* glow */}
                     <div
