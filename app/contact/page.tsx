@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 const ContactPage = () => {
   const [isSending, setIsSending] = useState(false);
 
-  // form submission part
   const handleFormSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -26,7 +25,7 @@ const ContactPage = () => {
       });
 
       if (res.ok) {
-        toast.info("Successfully send your message!");
+        toast.info("Successfully sent your message!");
         form.reset();
       }
     } catch {
@@ -38,78 +37,56 @@ const ContactPage = () => {
 
   return (
     <main className="relative min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-hidden">
-      {/* Toastify part */}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      {/* Toastify */}
+      <ToastContainer position="top-center" theme="light" />
 
-      {/* Animated background blobs */}
+      {/* Subtle animated background */}
       <motion.div
-        animate={{ x: [0, 30, 0], y: [0, -30, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-linear-to-br from-blue-400 to-purple-400 opacity-30 blur-3xl"
-      />
-      <motion.div
-        animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 -right-32 h-96 w-96 rounded-full bg-linear-to-br from-pink-400 to-orange-400 opacity-30 blur-3xl"
-      />
-      <motion.div
-        animate={{ x: [0, 20, 0], y: [0, 20, 0] }}
-        transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-linear-to-br from-green-400 to-emerald-400 opacity-25 blur-3xl"
+        animate={{ opacity: [0.4, 0.6, 0.4] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-purple-200/30 to-pink-200/30 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-gray-900 blur-3xl"
       />
 
       {/* Content */}
-      <section className="relative z-10 mx-auto max-w-3xl px-6 py-32">
+      <section className="relative z-10 mx-auto max-w-2xl px-6 py-32">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-14 text-center"
         >
-          <h1 className="text-5xl font-semibold tracking-tight mb-4">
-            Contact Me
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400 text-lg max-w-lg mx-auto">
-            Have a project, question, or just want to say hi? Fill out the form
-            below and I&apos;ll get back to you as soon as possible.
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-md mx-auto">
+            Whether you have a question, opportunity, or just want to connect —
+            feel free to send a message.
           </p>
         </motion.div>
 
         {/* Form */}
         <motion.form
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200 dark:border-gray-800 shadow-lg"
+          transition={{ delay: 0.15, duration: 0.6 }}
           onSubmit={handleFormSubmission}
+          className="rounded-2xl border border-zinc-500 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl p-8 shadow-xl space-y-6"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col">
-              <label className="mb-2 text-gray-700 dark:text-gray-300 font-medium">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Name
               </label>
               <input
                 name="name"
                 required
                 type="text"
-                placeholder="Your Name"
-                className="rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+                placeholder="Your name"
+                className="rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <div className="flex flex-col">
-              <label className="mb-2 text-gray-700 dark:text-gray-300 font-medium">
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Email
               </label>
               <input
@@ -117,34 +94,34 @@ const ContactPage = () => {
                 required
                 type="email"
                 placeholder="you@example.com"
-                className="rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+                className="rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
 
-          <div className="flex flex-col mt-6">
-            <label className="mb-2 text-gray-700 dark:text-gray-300 font-medium">
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Message
             </label>
             <textarea
               name="message"
-              placeholder="Your message..."
               rows={6}
-              className="rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 resize-none"
+              placeholder="Write your message here..."
+              className="rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSending}
-            className={`cursor-pointer active:scale-95 mt-6 w-full md:w-auto px-6 py-3 rounded-lg font-semibold transition 
-                      ${
-                        isSending
-                          ? "bg-gray-400"
-                          : "bg-blue-500 hover:bg-blue-600 text-white"
-                      }`}
+            className={`w-full cursor-pointer active:scale-95 rounded-lg py-3 font-semibold transition active:scale-[0.98]
+              ${
+                isSending
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
+              }`}
           >
-            {isSending ? "Sending your message..." : "Send message"}
+            {isSending ? "Sending..." : "Send Message"}
           </button>
         </motion.form>
       </section>
