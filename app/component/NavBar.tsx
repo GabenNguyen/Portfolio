@@ -66,7 +66,7 @@ function NavBar() {
             <div className="flex items-center gap-4">
               {/* Download CV Button */}
               <a
-                href="#"
+                href="/Resume_BaHoaNguyen.pdf"
                 download
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               >
