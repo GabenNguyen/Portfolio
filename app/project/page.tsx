@@ -64,7 +64,7 @@ export default function ProjectPage() {
           className="mb-20 text-center"
         >
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-            Projects
+            My Projects
           </h1>
           <p className="mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400 mx-auto">
             Some of my selected work where design, performance, and innovation
