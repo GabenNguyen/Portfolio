@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 
 const technicalSkills = [
   "Python",
+  "Java",
+  "MATLAB",
+  "ASP.NET",
+  "MSSQL",
   "React",
   "Next.js",
   "TypeScript",
@@ -16,12 +20,13 @@ const technicalSkills = [
 
 const softSkills = [
   "Communication",
+  "Hard-working",
   "Problem Solving",
   "Fast learner",
   "Team player",
   "Resilience",
   "Adaptive",
-  "Billingual communicator",
+  "Billingual communicator (Vietnamese and English)",
 ];
 
 const experiences = [
@@ -67,6 +72,7 @@ const projects = [
 
 const hobbies = [
   "Gaming",
+  "Exploring gaming accessories",
   "Reading Tech Blogs",
   "Traveling",
   "Badminton",
@@ -209,7 +215,7 @@ const AboutPage = () => {
               <br />
               <span className="font-semibold">Cohort: 2022 - 2024</span>
               <br />
-              GPA: <span className="text-blue-500 font-bold">2.18 / 4.0</span>
+              GPA: <span className="text-blue-500 font-bold">2.97 / 4.0</span>
             </li>
           </ul>
         </motion.div>
