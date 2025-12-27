@@ -111,9 +111,9 @@ const ContactPage = () => {
             />
           </div>
 
+          {/* Due to no custom domain, this part is for demonstration purposes only! */}
           <button
-            type="submit"
-            disabled={isSending}
+            type="button"
             className={`w-full cursor-pointer active:scale-95 rounded-lg py-3 font-semibold transition active:scale-[0.98]
               ${
                 isSending
