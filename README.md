@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💼 Personal Portfolio
 
-## Getting Started
+This is my personal portfolio website where I showcase my projects, skills and the learning journey as a developer.
 
-First, run the development server:
+**Live Demo:** https://my-portfolio-henna-beta-71.vercel.app/
 
+**GitHub Repository:** https://github.com/GabenNguyen/Portfolio.git
+
+---
+## ✨ Features
+- Modern, responsive UI.
+- Clean and minimal design, focusing on clarity.
+- Project showcase with description.
+- Deployed with CI/CD on Vercel.
+
+---
+## 💻 Tech Stack
+- **Framework:** Next.js
+- **Styling:** Tailwind CSS
+- **Language:** TypeScript
+- **Animation:** Framer Motion
+- **Email:** Resend
+- **Deployment:** Vercel
+- **Version Control:** Git & GitHub
+
+---
+## 🚀 Getting Started (Local Environment)
 ```bash
+# Clone the repository
+git clone https://github.com/GabenNguyen/Portfolio.git
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Please be advised that the email sending function is not usable due to the lack of custom domain. I cannot use Vercel public domain on Resend.
+
+# Thank you for your understanding!!!
 ```
+---
+## 🎯 Purposes of this project
+This project was built to:
+- Practice modern website development
+- Demonstrate front-end and deployment skills
+- Serve as a continuosly evolving portfolio
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
+## 🙋🏻‍♂️ Contact
+You can reach me via:
+- **📩 Email:** nguyenbahoa04@gmail.com
+- **📞 Phone number:** (+61) 481 991 586
+- **ℹ️ LinkedIn:** https://www.linkedin.com/in/bahoanguyen/
+- **ⓕ Facebook:** https://www.facebook.com/hoa.nguyen.430397
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+## 📌 Project Status
+This portfolio is **actively maintained** and **updated** as I continue learning and building new projects.
