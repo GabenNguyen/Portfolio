@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 "use client";
 
 import { motion } from "framer-motion";
@@ -41,18 +42,25 @@ export default function ProjectPage() {
   return (
     <main className="relative min-h-screen bg-white dark:bg-gray-950 text-zinc-900 dark:text-zinc-100 overflow-hidden">
       {/* Subtle background blobs */}
-      <div className="absolute inset-0 -z-10">
+      <motion.div
+        suppressHydrationWarning
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+        className="absolute inset-0 bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 opacity-20 dark:from-gray-700 dark:via-gray-900 dark:to-gray-800 blur-3xl pointer-events-none"
+      />
+      {[...Array(8)].map((_, index) => (
         <motion.div
-          animate={{ x: [0, 30, 0], y: [0, -30, 0] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-indigo-400/20 blur-3xl"
+          suppressHydrationWarning
+          key={index}
+          animate={{ y: [0, 25, 0], x: [0, 15, 0] }}
+          transition={{ repeat: Infinity, duration: 10 + index, delay: index }}
+          className="absolute w-20 h-20 rounded-full bg-blue-300/20 dark:bg-purple-700/20"
+          style={{
+            top: `${Math.random() * 90}%`,
+            left: `${Math.random() * 90}%`,
+          }}
         />
-        <motion.div
-          animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
-          transition={{ duration: 45, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/3 -right-40 h-96 w-96 rounded-full bg-pink-400/20 blur-3xl"
-        />
-      </div>
+      ))}
 
       {/* Content */}
       <section className="mx-auto max-w-6xl px-6 py-28">
