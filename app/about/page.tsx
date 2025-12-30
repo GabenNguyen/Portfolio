@@ -2,21 +2,15 @@
 "use client";
 import { motion } from "framer-motion";
 
-const technicalSkills = [
-  "Python",
-  "Java",
-  "MATLAB",
-  "ASP.NET",
-  "MSSQL",
+const frontEndSkills = [
   "React",
   "Next.js",
   "TypeScript",
-  "TailwindCSS",
   "Framer Motion",
-  "Prisma",
-  "SQL",
-  "Git",
+  "Tailwind CSS",
 ];
+
+const backEndSkills = ["Prisma", "PostgreSQL", "MSSQL", "Python"];
 
 const softSkills = [
   "Communication",
@@ -170,18 +164,43 @@ const AboutPage = () => {
           className="max-w-3xl w-full text-left"
         >
           <h2 className="text-2xl font-bold mb-4">Technical Skills</h2>
-          <div className="flex flex-wrap gap-3">
-            {technicalSkills.map((skill, skillIndex) => (
-              <motion.div
-                key={skill}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: skillIndex * 0.05 }}
-                className="px-5 py-2 rounded-full bg-linear-to-r from-blue-200 to-blue-400 dark:from-blue-900 dark:to-blue-700 text-blue-800 dark:text-blue-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
-              >
-                {skill}
-              </motion.div>
-            ))}
+          <div className="mb-6">
+            <p className="font-bold text-lg mb-3 text-gray-800 dark:text-gray-200">
+              Frontend
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {frontEndSkills.map((skill, i) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="hover:scale-110 transition-all px-4 py-2 rounded-full bg-linear-to-r from-blue-300 to-blue-400 dark:from-blue-900 dark:to-blue-800 text-blue-800 dark:text-blue-200 font-medium shadow-sm"
+                >
+                  {skill}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Backend */}
+          <div>
+            <p className="font-bold text-lg mb-3 text-gray-800 dark:text-gray-200">
+              Backend
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {backEndSkills.map((skill, i) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="hover:scale-110 transition-all px-4 py-2 rounded-full bg-linear-to-r from-blue-300 to-blue-400 dark:from-blue-900 dark:to-blue-800 text-blue-800 dark:text-blue-200 font-medium shadow-sm"
+                >
+                  {skill}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
