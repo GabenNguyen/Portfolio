@@ -37,7 +37,7 @@ const projects = [
     accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
   },
    {
-    title: "AI Resume Analyser (In development)",
+    title: "AI Resume Analyser",
     subtitle: "An AI-powered Resume Analyser with modern UI",
     url: "https://github.com/GabenNguyen/AI-Resume-Analyser",
     stack: [
