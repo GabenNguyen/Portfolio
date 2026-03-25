@@ -29,16 +29,15 @@ const experiences = [
     company: "Self-employed",
     duration: "Aug 2022 - Aug 2023",
     description: [
-      "Delivered personalised, result-driven lessons tailored to individual learning goals.",
-      "Explained complex concepts clearly and confidently in a simple, supportive manner.",
+      "Structured individualised lesson plans that raised average test scores by 20%.",
+      "Consistently drove outstanding academic outcomes, enabling students to achieve top exam scores and measurable proficiency improvements.",
       "Helped students achieve strong exam results and measurable proficiency improvements.",
-      "Adapted quickly to diverse student needs while maintaining a positive learning experience.",
-      "Maintained accuracy and attention to detail when tracking student progress.",
-      "Organised and managed multiple teaching sessions, demonstrating strong time management and reliability.",
+      "Adapted teaching methods for 10+ diverse learners; resolved learning challenges quickly while maintaining 100% student satisfaction.",
+      "Managed 10+ tutoring sessions weekly through disciplined organisation.",
     ],
     achievement: [
-      "Significantly improved students' English skills, with many achieving top scores (9/10) in high school exams.",
-      "Supported students to attain top results in the Cambridge FLYERS English proficiency test, with many scoring 4/5 across all sections.",
+      "Signiﬁcantly improved students’ English skills, with many achieving 9 out of 10 in high school exams.",
+      "Supported students to attain top results in the Cambridge FLYERS English proﬁciency test, with many scoring 4 out 5 across all sections.",
     ],
   },
 ];
@@ -62,6 +61,18 @@ const projects = [
     slug: "/project",
     tech: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
   },
+  {
+    title: "AI Resume Analyser",
+    slug: "/project",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Gemini API",
+      "Framer Motion",
+      "Shadcn"
+    ],
+  }
+
 ];
 
 const hobbies = [
@@ -75,21 +86,23 @@ const hobbies = [
 
 const AboutPage = () => {
   return (
-    <main className="relative min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-hidden">
-      {/* Background Gradients */}
-      <motion.div
-        suppressHydrationWarning
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-        className="absolute inset-0 bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 opacity-20 dark:from-gray-700 dark:via-gray-900 dark:to-gray-800 blur-3xl pointer-events-none"
-      />
+    <main className="relative min-h-screen bg-background text-foreground overflow-hidden font-sans">
+      {/* Abstract Glowing Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-600/10 blur-[100px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+      </div>
+
+      {/* Floating Orbs mimicking the original bg */}
       {[...Array(8)].map((_, i) => (
         <motion.div
           suppressHydrationWarning
           key={i}
           animate={{ y: [0, 25, 0], x: [0, 15, 0] }}
           transition={{ repeat: Infinity, duration: 10 + i, delay: i }}
-          className="absolute w-20 h-20 rounded-full bg-blue-300/20 dark:bg-purple-700/20"
+          className="absolute w-20 h-20 rounded-full bg-indigo-500/10 dark:bg-purple-500/10 blur-xl pointer-events-none z-0"
           style={{
             top: `${Math.random() * 90}%`,
             left: `${Math.random() * 90}%`,
@@ -98,39 +111,32 @@ const AboutPage = () => {
       ))}
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-28 flex flex-col items-center gap-12 relative z-10">
+      <section className="container mx-auto px-4 py-28 flex flex-col items-center gap-12 relative z-10 w-full">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl md:text-6xl font-bold text-center"
+          className="text-5xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg text-center pb-2 tracking-tight"
         >
           About Me
         </motion.h1>
 
+        {/* Profile Card */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl max-w-3xl w-full backdrop-blur-xl border border-gray-200 dark:border-gray-800"
+          className="bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)] transition-all duration-500"
         >
-          <h2 className="text-2xl font-bold mb-4">Professional Profile</h2>
-          Motivated Information Technology student, currently pursuing the
-          Bachelor of Information Technology at the University of South
-          Australia. Strong{" "}
-          <span className="font-bold text-blue-500">communication skills</span>,
-          combined with a{" "}
-          <span className="font-bold text-blue-500">solid IT background</span>{" "}
-          and experience in digital technologies. Quick to learn and adapt to in
-          fast-paced environments and new systems, with proven experience
-          delivering client support and clear explanations in face-to-face
-          settings. With a{" "}
-          <span className="font-bold text-blue-500">
-            positive mindset, resilience and commitment to lifelong learning
-          </span>
-          , I am eager to contribute by delivering professional,
-          customer-focused service and client support both in person and in a
-          digital environment.
+          <h2 className="text-3xl font-bold mb-4 text-foreground">Professional Profile</h2>
+          <p className="text-lg leading-relaxed font-light">
+            Motivated Information Technology student, currently pursuing the Bachelor of Information Technology at the
+            Adelaide University, with hands-on experience building production-grade web applications using Next.js/React,
+            TypeScript, Tailwind CSS and AI APIs. Rapidly adapts to new technologies and frameworks, consistently
+            delivering scalable, high-performance solutions in fast-paced development environments. Delivers user-focused
+            solutions that improve outcomes, combining strong communication and problem-solving to translate complex
+            requirements into clear, effective results across both technical and client-facing environments.
+          </p>
         </motion.div>
 
         {/* Soft Skills */}
@@ -138,9 +144,9 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="max-w-3xl w-full text-left"
+          className="max-w-4xl w-full text-left"
         >
-          <h2 className="text-2xl font-bold mb-4">Soft Skills</h2>
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Soft Skills</h2>
           <div className="flex flex-wrap gap-3">
             {softSkills.map((skill, skillIndex) => (
               <motion.div
@@ -148,7 +154,7 @@ const AboutPage = () => {
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: skillIndex * 0.05 }}
-                className="px-5 py-2 rounded-full bg-linear-to-r from-green-200 to-green-300 dark:from-green-900 dark:to-green-800 text-green-800 dark:text-green-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
+                className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-foreground font-medium shadow-lg hover:scale-105 hover:bg-white/10 hover:border-green-400/50 hover:shadow-[0_0_15px_rgba(74,222,128,0.2)] transition-all cursor-default backdrop-blur-md text-sm md:text-base"
               >
                 {skill}
               </motion.div>
@@ -161,11 +167,11 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="max-w-3xl w-full text-left"
+          className="max-w-4xl w-full text-left"
         >
-          <h2 className="text-2xl font-bold mb-4">Technical Skills</h2>
-          <div className="mb-6">
-            <p className="font-bold text-lg mb-3 text-gray-800 dark:text-gray-200">
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Technical Skills</h2>
+          <div className="mb-8">
+            <p className="font-semibold text-lg mb-4 text-purple-400 tracking-wide uppercase text-sm">
               Frontend
             </p>
             <div className="flex flex-wrap gap-3">
@@ -175,7 +181,7 @@ const AboutPage = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  className="hover:scale-110 transition-all px-4 py-2 rounded-full bg-linear-to-r from-blue-300 to-blue-400 dark:from-blue-900 dark:to-blue-800 text-blue-800 dark:text-blue-200 font-medium shadow-sm"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
                 >
                   {skill}
                 </motion.div>
@@ -185,7 +191,7 @@ const AboutPage = () => {
 
           {/* Backend */}
           <div>
-            <p className="font-bold text-lg mb-3 text-gray-800 dark:text-gray-200">
+            <p className="font-semibold text-lg mb-4 text-pink-400 tracking-wide uppercase text-sm">
               Backend
             </p>
             <div className="flex flex-wrap gap-3">
@@ -195,7 +201,7 @@ const AboutPage = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  className="hover:scale-110 transition-all px-4 py-2 rounded-full bg-linear-to-r from-blue-300 to-blue-400 dark:from-blue-900 dark:to-blue-800 text-blue-800 dark:text-blue-200 font-medium shadow-sm"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
                 >
                   {skill}
                 </motion.div>
@@ -209,32 +215,39 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl max-w-3xl w-full backdrop-blur-xl border border-gray-200 dark:border-gray-800"
+          className="bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
         >
-          <h2 className="text-2xl font-bold mb-4">Education</h2>
-          <ul className="space-y-3 text-lg">
-            <li>
-              <span className="font-semibold">Adelaide University</span> –
+          {/* Subtle glow highlight on edge */}
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Education</h2>
+          <ul className="space-y-6 text-lg text-muted-foreground font-light">
+            <li className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-purple-500 before:rounded-full before:shadow-[0_0_10px_rgba(168,85,247,0.8)]">
+              <span className="font-semibold text-foreground text-xl">Adelaide University</span> –
               Bachelor of Information Technology
               <br />
-              GPA: <span className="text-blue-500 font-bold">6.18/7.0</span> |
+              <div className="mt-2" />
+              GPA: <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-bold ml-1">6.18/7.0</span> |
               Expected Graduation: 2027
               <br />
-              <span className="font-semibold">
+              <div className="mt-2" />
+              <span className="font-medium inline-block bg-white/5 px-3 py-1 rounded-md border border-white/10 mt-1 shadow-sm">
                 Recipient of{" "}
-                <span className="text-blue-500 font-bold">
+                <span className="text-purple-400 font-bold">
                   UniSA International Merit Scholarship
                 </span>{" "}
                 (15% deduction in tuition fee)
               </span>
             </li>
-            <li>
-              <span className="font-semibold">International University</span> –
+            <div className="w-full h-px bg-white/10 my-4" />
+            <li className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-pink-500 before:rounded-full before:shadow-[0_0_10px_rgba(236,72,153,0.8)]">
+              <span className="font-semibold text-foreground text-xl">International University</span> –
               Bachelor of Information Technology, Computer Engineering
               <br />
-              <span className="font-semibold">Cohort: 2022 - 2024</span>
+              <div className="mt-2" />
+              <span className="font-medium text-gray-300">Cohort: 2022 - 2024</span>
               <br />
-              GPA: <span className="text-blue-500 font-bold">2.97 / 4.0</span>
+              <div className="mt-1" />
+              GPA: <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400 font-bold ml-1">2.97 / 4.0</span>
             </li>
           </ul>
         </motion.div>
@@ -244,26 +257,32 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="max-w-3xl w-full bg-white/70 dark:bg-gray-900/70 p-8 rounded-3xl shadow-2xl text-left backdrop-blur-xl border border-gray-200 dark:border-gray-800"
+          className="max-w-4xl w-full bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl text-left backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
         >
-          <h2 className="text-2xl font-bold mb-4">Experience</h2>
-          <ul className="space-y-4">
+          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-blue-500/10 blur-[80px]" />
+          <h2 className="text-2xl font-bold mb-6 text-foreground relative z-10">Experience</h2>
+          <ul className="space-y-8 relative z-10">
             {experiences.map((exp) => (
               <li key={exp.title}>
-                <p className="font-semibold text-lg">
-                  {exp.title} - {exp.company}
+                <p className="font-bold text-xl">
+                  {exp.title} <span className="text-purple-400">@ {exp.company}</span>
                 </p>
-                <p className="text-sm text-muted-foreground">{exp.duration}</p>
-                <p className="text-md mt-3 font-bold">Key responsibilities</p>
-                <ul className="mt-3 list-disc pl-5 space-y-2 text-base">
+                <div className="inline-flex items-center justify-center px-3 py-1 mt-2 text-xs font-semibold tracking-wide bg-white/10 rounded-full border border-white/10">
+                  {exp.duration}
+                </div>
+                <p className="text-lg mt-5 font-semibold">Key responsibilities</p>
+                <ul className="mt-3 list-disc pl-5 space-y-2 text-base font-light marker:text-purple-500">
                   {exp.description.map((point, index) => (
                     <li key={index}>{point}</li>
                   ))}
                 </ul>
-                <p className="text-md mt-3 font-bold">Achievements</p>
-                <ul className="mt-3 list-disc pl-5 space-y-2 text-base">
+                <p className="text-lg mt-5 font-semibold">Achievements</p>
+                <ul className="mt-3 list-none space-y-3 text-base font-light">
                   {exp.achievement.map((achievement, index) => (
-                    <li key={index}>{achievement}</li>
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-pink-400 text-xl leading-5">★</span>
+                      <span>{achievement}</span>
+                    </li>
                   ))}
                 </ul>
               </li>
@@ -276,11 +295,11 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="max-w-3xl w-full"
+          className="max-w-4xl w-full"
         >
-          <h2 className="text-2xl font-bold mb-4">Projects</h2>
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Projects Preview</h2>
 
-          <ul className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/70 dark:bg-gray-900/70 rounded-3xl border border-gray-200 dark:border-gray-800 backdrop-blur-xl">
+          <ul className="flex flex-col gap-4">
             {projects.map((project, i) => (
               <motion.li
                 key={project.title}
@@ -290,24 +309,26 @@ const AboutPage = () => {
               >
                 <a
                   href={project.slug}
-                  className="flex items-center justify-between p-5 hover:bg-gray-100/60 dark:hover:bg-gray-800/60 transition-colors rounded-3xl"
+                  className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all rounded-[1.5rem] backdrop-blur-xl shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] relative overflow-hidden"
                 >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
                   <div>
-                    <p className="text-lg font-semibold">{project.title}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <p className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors">{project.title}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
+                          className="text-xs font-semibold tracking-wide px-3 py-1 rounded-full bg-white/10 dark:bg-black/40 border border-white/5"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold">
-                    View →
-                  </span>
+                  <div className="mt-4 md:mt-0 flex items-center gap-2 text-sm text-purple-400 font-semibold group-hover:text-pink-400 transition-colors">
+                    <span>View Project</span>
+                    <span className="text-lg leading-none transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
+                  </div>
                 </a>
               </motion.li>
             ))}
@@ -319,9 +340,9 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.6 }}
-          className="max-w-3xl w-full text-left"
+          className="max-w-4xl w-full text-left"
         >
-          <h2 className="text-2xl font-bold mb-4">Hobbies & Interests</h2>
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Hobbies & Interests</h2>
           <div className="flex flex-wrap gap-3">
             {hobbies.map((hobby, i) => (
               <motion.div
@@ -329,7 +350,7 @@ const AboutPage = () => {
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className="px-5 py-2 rounded-full bg-linear-to-r from-pink-200 to-pink-300 dark:from-pink-900 dark:to-pink-700 text-pink-800 dark:text-pink-200 font-semibold shadow-lg hover:scale-105 transition-transform cursor-default"
+                className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-foreground font-medium shadow-lg hover:scale-105 hover:bg-white/10 hover:border-pink-400/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.2)] transition-all cursor-pointer backdrop-blur-md text-sm md:text-base"
               >
                 {hobby}
               </motion.div>

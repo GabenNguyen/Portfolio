@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-
 import { BsDownload } from "react-icons/bs";
 
 import {
@@ -24,59 +23,60 @@ const navItems = [
 function NavBar() {
   const pathname = usePathname();
   return (
-    <nav className="bg-linear-to-r from-blue-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 border-b border-blue-100 dark:border-gray-800 backdrop-blur-sm shadow-sm">
+    <nav className="sticky top-0 z-50 transition-all duration-300 bg-white/70 dark:bg-gray-950/70 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+            <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">
               Gaben NGUYEN
             </span>
           </Link>
 
           {/* Navigation Links */}
           <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="flex items-center space-x-1">
-              {navItems.map(({ label, href }) => (
-                <NavigationMenuItem key={label}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={href}
-                      className={cn(
-                        "relative px-4 py-2 text-lg! font-medium rounded-lg transition-all duration-200",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-blue-100 dark:hover:bg-gray-800",
-                        pathname === href &&
-                          "bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400 font-bold shadow-sm"
-                      )}
-                    >
-                      {label}
-                      {pathname === href && (
-                        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-linear-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-full" />
-                      )}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
+            <NavigationMenuList className="flex items-center space-x-2">
+              {navItems.map(({ label, href }) => {
+                const isActive = pathname === href;
+                return (
+                  <NavigationMenuItem key={label}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={href}
+                        className={cn(
+                          "relative px-4 sm:px-5 py-2 text-sm sm:text-base font-medium rounded-full transition-all duration-200",
+                          "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10",
+                          isActive
+                            ? "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-semibold"
+                            : "bg-transparent"
+                        )}
+                      >
+                        {label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
             </NavigationMenuList>
           </NavigationMenu>
 
           {/* Right Section: Mode Toggle + Download CV button */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               {/* Download CV Button */}
               <a
-                href="/Resume_BaHoaNguyen.pdf"
+                href="/Resume_Ba_Hoa_NGUYEN.pdf"
                 download
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 font-semibold py-2 px-4 sm:py-2.5 sm:px-5 rounded-full transition-colors active:scale-95"
               >
-                <span className="flex items-center gap-2 active:scale-95">
-                  <BsDownload />
-                  Download CV
-                </span>
+                <BsDownload className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm md:text-base">Download CV</span>
+                <span className="sm:hidden text-sm">CV</span>
               </a>
 
-              <ModeToggle />
+              <div className="flex items-center justify-center p-0.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <ModeToggle />
+              </div>
             </div>
           </div>
         </div>
