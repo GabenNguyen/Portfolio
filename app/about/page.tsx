@@ -10,7 +10,11 @@ const frontEndSkills = [
   "Tailwind CSS",
 ];
 
-const backEndSkills = ["Prisma", "PostgreSQL", "MSSQL", "Python"];
+const backEndSkills = ["Prisma", "PostgreSQL", "MSSQL", "Python", "Neon (database)"];
+
+const operatingSystems = ["Windows", "Linux (Ubuntu)", "MacOS"];
+
+const otherTools = ["Figma", "Adobe Premiere Pro", "CapCut", "Git", "GitHub"]
 
 const softSkills = [
   "Communication",
@@ -196,6 +200,26 @@ const AboutPage = () => {
             </p>
             <div className="flex flex-wrap gap-3">
               {backEndSkills.map((skill, i) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
+                >
+                  {skill}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Other tools */}
+          <div>
+            <p className="font-semibold text-lg mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
+              Other tools
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {otherTools.map((skill, i) => (
                 <motion.div
                   key={skill}
                   initial={{ opacity: 0, scale: 0.9 }}
