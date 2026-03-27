@@ -16,10 +16,6 @@ const fadeUp = (delay = 0) => ({
   animate: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const } },
 });
 
-const fadeIn = (delay = 0) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.6, delay } },
-});
 
 /* Skill category icon map */
 const skillCategoryMeta: Record<string, { icon: React.ElementType; label: string; gradient: string; border: string }> = {
@@ -45,11 +41,11 @@ const HomePage = () => {
 
       {/* Ambient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-15%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/8 blur-[140px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-blue-600/8 blur-[130px]" />
-        <div className="absolute top-[45%] left-[55%] w-[35%] h-[35%] rounded-full bg-pink-600/6 blur-[120px]" />
+        <div className="absolute top-[-15%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/12 dark:bg-purple-600/8 blur-[140px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-blue-600/10 dark:bg-blue-600/8 blur-[130px]" />
+        <div className="absolute top-[45%] left-[55%] w-[35%] h-[35%] rounded-full bg-pink-600/8 dark:bg-pink-600/6 blur-[120px]" />
         {/* Subtle grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_30%,#000_60%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_30%,#000_60%,transparent_100%)]" />
       </div>
 
       {/* HERO */}
@@ -66,9 +62,9 @@ const HomePage = () => {
             <div className="w-full xl:w-[55%] flex flex-col items-center xl:items-start text-center xl:text-left space-y-7 z-20">
 
               {/* Status badge */}
-              <motion.div {...fadeUp(0.2)} className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.12)]">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                <span className="text-sm font-semibold tracking-wide text-emerald-300">Available for Opportunities</span>
+              <motion.div {...fadeUp(0.2)} className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.12)]">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                <span className="text-sm font-semibold tracking-wide text-emerald-600 dark:text-emerald-300">Available for Opportunities</span>
               </motion.div>
 
               {/* Name + role */}
@@ -109,12 +105,12 @@ const HomePage = () => {
 
               {/* Location + Edu pill */}
               <motion.div {...fadeUp(0.72)} className="flex flex-wrap gap-3 justify-center xl:justify-start">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-muted-foreground">
-                  <GraduationCap className="w-3.5 h-3.5 text-violet-400" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-muted-foreground">
+                  <GraduationCap className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
                   Bachelor of IT · Adelaide University
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-muted-foreground">
-                  <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-muted-foreground">
+                  <MapPin className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
                   Para Hills, South Australia
                 </span>
               </motion.div>
@@ -124,7 +120,7 @@ const HomePage = () => {
                 <Link href="/project" className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto h-13 px-8 text-base font-semibold rounded-2xl bg-white text-black hover:bg-gray-200 hover:-translate-y-1 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_35px_rgba(255,255,255,0.35)] flex items-center gap-2 group cursor-pointer"
+                    className="w-full sm:w-auto h-13 px-8 text-base font-semibold rounded-2xl bg-foreground text-background hover:opacity-90 hover:-translate-y-1 active:scale-95 transition-all shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_35px_rgba(139,92,246,0.35)] flex items-center gap-2 group cursor-pointer"
                   >
                     View Projects
                     <FolderOpen className="w-5 h-5 group-hover:rotate-12 transition-transform" />
@@ -135,7 +131,7 @@ const HomePage = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto h-13 px-8 text-base font-semibold rounded-2xl bg-white/5 border-white/20 backdrop-blur-md hover:bg-white/10 hover:border-white/40 hover:-translate-y-1 active:scale-95 transition-all text-foreground flex items-center gap-2 group cursor-pointer"
+                    className="w-full sm:w-auto h-13 px-8 text-base font-semibold rounded-2xl bg-black/5 dark:bg-white/5 border-black/20 dark:border-white/20 backdrop-blur-md hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/40 dark:hover:border-white/40 hover:-translate-y-1 active:scale-95 transition-all text-foreground flex items-center gap-2 group cursor-pointer"
                   >
                     More About Me
                     <FileUser className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
@@ -146,7 +142,7 @@ const HomePage = () => {
                   <Button
                     size="lg"
                     variant="ghost"
-                    className="w-full sm:w-auto h-13 px-6 text-base font-medium rounded-2xl border border-transparent hover:border-white/10 hover:bg-white/5 hover:-translate-y-1 active:scale-95 transition-all text-muted-foreground hover:text-foreground flex items-center gap-2 group cursor-pointer"
+                    className="w-full sm:w-auto h-13 px-6 text-base font-medium rounded-2xl border border-transparent hover:border-black/10 dark:hover:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 hover:-translate-y-1 active:scale-95 transition-all text-muted-foreground hover:text-foreground flex items-center gap-2 group cursor-pointer"
                   >
                     Let&apos;s Connect
                     <MoveUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -155,44 +151,44 @@ const HomePage = () => {
               </motion.div>
 
               {/* Contact strip */}
-              <motion.div {...fadeUp(0.95)} className="flex flex-col sm:flex-row flex-wrap items-center justify-center xl:justify-start gap-5 pt-6 border-t border-white/10 w-full">
+              <motion.div {...fadeUp(0.95)} className="flex flex-col sm:flex-row flex-wrap items-center justify-center xl:justify-start gap-5 pt-6 border-t border-black/10 dark:border-white/10 w-full">
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group">
-                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 group-hover:border-purple-400/50 group-hover:bg-purple-500/10 transition-colors">
-                    <Phone className="w-4 h-4 text-purple-400" />
+                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 group-hover:border-purple-500/50 group-hover:bg-purple-500/10 transition-colors">
+                    <Phone className="w-4 h-4 text-purple-500 dark:text-purple-400" />
                   </div>
                   <span>(+61) 481 991 586</span>
                 </div>
 
-                <BsDot className="hidden sm:block text-white/20 text-2xl" />
+                <BsDot className="hidden sm:block text-black/20 dark:text-white/20 text-2xl" />
 
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group">
-                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 group-hover:border-pink-400/50 group-hover:bg-pink-500/10 transition-colors">
-                    <Mail className="w-4 h-4 text-pink-400" />
+                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 group-hover:border-pink-500/50 group-hover:bg-pink-500/10 transition-colors">
+                    <Mail className="w-4 h-4 text-pink-500 dark:text-pink-400" />
                   </div>
                   <span>nguyenbahoa04@gmail.com</span>
                 </div>
 
-                <BsDot className="hidden sm:block text-white/20 text-2xl" />
+                <BsDot className="hidden sm:block text-black/20 dark:text-white/20 text-2xl" />
 
                 <div className="flex items-center gap-3">
                   <Link href="https://github.com/GabenNguyen" target="_blank" rel="noopener noreferrer">
                     <motion.div
                       whileHover={{ scale: 1.15, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
-                      className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-lg"
+                      className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-lg"
                     >
                       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-purple-500/40 to-indigo-500/40 blur-md" />
-                      <BiLogoGithub className="relative w-6 h-6 text-foreground/80 group-hover:text-white transition-colors" />
+                      <BiLogoGithub className="relative w-6 h-6 text-foreground/80 group-hover:text-foreground transition-colors" />
                     </motion.div>
                   </Link>
                   <Link href="https://www.linkedin.com/in/bahoanguyen/" target="_blank" rel="noopener noreferrer">
                     <motion.div
                       whileHover={{ scale: 1.15, rotate: -5 }}
                       whileTap={{ scale: 0.95 }}
-                      className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-lg"
+                      className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-lg"
                     >
                       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-blue-500/40 to-cyan-500/40 blur-md" />
-                      <BiLogoLinkedin className="relative w-6 h-6 text-foreground/80 group-hover:text-white transition-colors" />
+                      <BiLogoLinkedin className="relative w-6 h-6 text-foreground/80 group-hover:text-foreground transition-colors" />
                     </motion.div>
                   </Link>
                 </div>
@@ -242,10 +238,10 @@ const HomePage = () => {
                 <motion.div
                   animate={{ y: [-12, 12, -12] }}
                   transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-10 rounded-[2.5rem] bg-black/20 border-2 border-white/10 backdrop-blur-2xl shadow-2xl overflow-hidden p-2 group"
-                  style={{ boxShadow: "0 25px 50px -12px rgba(139,92,246,0.25), inset 0 0 20px rgba(255,255,255,0.05)" }}
+                  className="absolute inset-10 rounded-[2.5rem] bg-white/60 dark:bg-black/20 border-2 border-black/10 dark:border-white/10 backdrop-blur-2xl shadow-2xl overflow-hidden p-2 group"
+                  style={{ boxShadow: "0 25px 50px -12px rgba(139,92,246,0.25), inset 0 0 20px rgba(139,92,246,0.05)" }}
                 >
-                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-white/5">
+                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-black/5 dark:border-white/5">
                     <Image
                       src={profileImg}
                       alt="Profile of Gaben Nguyen"
@@ -254,10 +250,10 @@ const HomePage = () => {
                       className="object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-700 ease-out"
                       quality={100}
                     />
-                    <div className="absolute inset-0 shadow-[inset_0_-80px_60px_-20px_rgba(0,0,0,0.6)] pointer-events-none" />
+                    <div className="absolute inset-0 shadow-[inset_0_-80px_60px_-20px_rgba(0,0,0,0.4)] pointer-events-none" />
                   </div>
                   {/* Shimmer */}
-                  <div className="absolute top-0 left-[-100%] w-[40%] h-[200%] bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-[30deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none" />
+                  <div className="absolute top-0 left-[-100%] w-[40%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none" />
                 </motion.div>
 
                 {/* Floating badge — Tech stack */}
@@ -265,14 +261,14 @@ const HomePage = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1, y: [-5, 5, -5] }}
                   transition={{ opacity: { delay: 1.4, duration: 0.5 }, scale: { delay: 1.4, duration: 0.5, type: "spring" }, y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.4 } }}
-                  className="absolute top-[18%] -right-4 sm:-right-8 px-4 py-3 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
+                  className="absolute top-[18%] -right-4 sm:-right-8 px-4 py-3 rounded-2xl bg-white/90 dark:bg-black/50 backdrop-blur-xl border border-black/15 dark:border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
                 >
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-inner">
                     <span className="text-white font-bold text-base">⚡</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[9px] text-gray-400 font-medium tracking-widest uppercase">Stack Focus</span>
-                    <span className="text-sm text-white font-bold tracking-wide">React &amp; Next.js</span>
+                    <span className="text-[9px] text-muted-foreground font-medium tracking-widest uppercase">Stack Focus</span>
+                    <span className="text-sm text-foreground font-bold tracking-wide">React &amp; Next.js</span>
                   </div>
                 </motion.div>
 
@@ -281,14 +277,14 @@ const HomePage = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1, y: [5, -5, 5] }}
                   transition={{ opacity: { delay: 1.7, duration: 0.5 }, scale: { delay: 1.7, duration: 0.5, type: "spring" }, y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.7 } }}
-                  className="absolute bottom-[18%] -left-4 sm:-left-8 px-4 py-3 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
+                  className="absolute bottom-[18%] -left-4 sm:-left-8 px-4 py-3 rounded-2xl bg-white/90 dark:bg-black/50 backdrop-blur-xl border border-black/15 dark:border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
                 >
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-inner">
                     <span className="text-white font-bold text-base">💡</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[9px] text-gray-400 font-medium tracking-widest uppercase">Building</span>
-                    <span className="text-sm text-white font-bold tracking-wide">Web Apps</span>
+                    <span className="text-[9px] text-muted-foreground font-medium tracking-widest uppercase">Building</span>
+                    <span className="text-sm text-foreground font-bold tracking-wide">Web Apps</span>
                   </div>
                 </motion.div>
 
@@ -308,9 +304,9 @@ const HomePage = () => {
           <motion.div
             animate={{ y: [0, 7, 0] }}
             transition={{ duration: 1.4, repeat: Infinity }}
-            className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1"
+            className="w-5 h-8 rounded-full border border-black/20 dark:border-white/20 flex items-start justify-center p-1"
           >
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.4, repeat: Infinity }} className="w-1 h-2 rounded-full bg-white/50" />
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.4, repeat: Infinity }} className="w-1 h-2 rounded-full bg-black/40 dark:bg-white/50" />
           </motion.div>
         </motion.div>
       </section>
@@ -329,7 +325,7 @@ const HomePage = () => {
               <motion.div
                 key={label}
                 variants={fadeUp(0)}
-                className="group relative overflow-hidden rounded-2xl bg-white/3 border border-white/10 backdrop-blur-sm p-6 text-center hover:border-white/20 hover:bg-white/5 transition-all duration-300"
+                className="group relative overflow-hidden rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 text-center hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
@@ -369,7 +365,7 @@ const HomePage = () => {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
           >
             {(Object.entries(skills) as [string, string[]][]).map(([category, items]) => {
-              const meta = skillCategoryMeta[category] ?? { icon: Code2, label: category, gradient: "from-white/5 to-white/3", border: "border-white/10" };
+              const meta = skillCategoryMeta[category] ?? { icon: Code2, label: category, gradient: "from-black/[0.03] to-black/[0.02] dark:from-white/5 dark:to-white/3", border: "border-black/10 dark:border-white/10" };
               const Icon = meta.icon;
               return (
                 <motion.div
@@ -379,7 +375,7 @@ const HomePage = () => {
                 >
                   {/* Category header */}
                   <div className="flex items-center gap-3 mb-5">
-                    <div className={`w-10 h-10 rounded-xl bg-white/5 border ${meta.border} flex items-center justify-center`}>
+                    <div className={`w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 border ${meta.border} flex items-center justify-center`}>
                       <Icon className="w-5 h-5 text-foreground/80" />
                     </div>
                     <span className="text-sm font-semibold text-foreground/90 uppercase tracking-wide">{meta.label}</span>
@@ -390,7 +386,7 @@ const HomePage = () => {
                     {items.map((skill) => (
                       <span
                         key={skill}
-                        className="inline-block px-2.5 py-1 rounded-lg text-xs font-medium bg-white/8 border border-white/10 text-muted-foreground hover:text-foreground hover:bg-white/12 transition-colors"
+                        className="inline-block px-2.5 py-1 rounded-lg text-xs font-medium bg-black/[0.06] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 text-muted-foreground hover:text-foreground hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors"
                       >
                         {skill}
                       </span>
@@ -422,7 +418,7 @@ const HomePage = () => {
             <Link href="/project">
               <Button
                 variant="outline"
-                className="hidden sm:flex items-center gap-2 rounded-full border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/25 text-sm font-medium cursor-pointer"
+                className="hidden sm:flex items-center gap-2 rounded-full border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/25 dark:hover:border-white/25 text-sm font-medium cursor-pointer"
               >
                 All Projects <MoveUpRight className="w-3.5 h-3.5" />
               </Button>
@@ -440,7 +436,7 @@ const HomePage = () => {
               <motion.div
                 key={project.name}
                 variants={fadeUp(0)}
-                className="group relative overflow-hidden rounded-2xl bg-white/3 border border-white/10 backdrop-blur-sm p-6 hover:border-white/20 hover:bg-white/5 transition-all duration-400"
+                className="group relative overflow-hidden rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all duration-400"
               >
                 {/* Accent gradient per card */}
                 <div
@@ -453,14 +449,14 @@ const HomePage = () => {
                 {/* Top row */}
                 <div className="flex items-start justify-between gap-4 mb-4 relative">
                   <div className={`w-11 h-11 rounded-xl flex items-center justify-center border ${index % 2 === 0 ? "bg-violet-500/15 border-violet-500/30" : "bg-cyan-500/15 border-cyan-500/30"}`}>
-                    <FolderOpen className={`w-5 h-5 ${index % 2 === 0 ? "text-violet-400" : "text-cyan-400"}`} />
+                    <FolderOpen className={`w-5 h-5 ${index % 2 === 0 ? "text-violet-500 dark:text-violet-400" : "text-cyan-500 dark:text-cyan-400"}`} />
                   </div>
                   <div className="flex items-center gap-2">
                     <Link href={project.github} target="_blank" rel="noopener noreferrer">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.92 }}
-                        className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all"
+                        className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all"
                       >
                         <Github className="w-4 h-4 text-foreground/70" />
                       </motion.div>
@@ -469,7 +465,7 @@ const HomePage = () => {
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.92 }}
-                        className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all"
+                        className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all"
                       >
                         <ExternalLink className="w-4 h-4 text-foreground/70" />
                       </motion.div>
@@ -487,15 +483,15 @@ const HomePage = () => {
                     <span
                       key={t}
                       className={`px-2.5 py-1 rounded-md text-xs font-medium border ${index % 2 === 0
-                        ? "bg-violet-500/10 border-violet-500/25 text-violet-300"
-                        : "bg-cyan-500/10 border-cyan-500/25 text-cyan-300"
+                        ? "bg-violet-500/10 border-violet-500/25 text-violet-600 dark:text-violet-300"
+                        : "bg-cyan-500/10 border-cyan-500/25 text-cyan-600 dark:text-cyan-300"
                         }`}
                     >
                       {t}
                     </span>
                   ))}
                   {project.tech.length > 5 && (
-                    <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-white/5 border border-white/10 text-muted-foreground">
+                    <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-muted-foreground">
                       +{project.tech.length - 5} more
                     </span>
                   )}
@@ -506,16 +502,14 @@ const HomePage = () => {
 
           {/* Mobile view-all button */}
           <Link href="/project" className="sm:hidden mt-8 block">
-            <Button variant="outline" className="w-full flex items-center justify-center gap-2 rounded-full border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer">
+            <Button variant="outline" className="w-full flex items-center justify-center gap-2 rounded-full border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer">
               View All Projects <MoveUpRight className="w-4 h-4" />
             </Button>
           </Link>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-           SECTION 5 — CTA BANNER
-         ══════════════════════════════════════════════════════════ */}
+      {/* CTA BANNER */}
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -523,7 +517,7 @@ const HomePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7 }}
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-900/30 via-background to-cyan-900/20 backdrop-blur-xl p-10 md:p-16 text-center"
+            className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-violet-500/10 dark:from-violet-900/30 via-background to-cyan-500/10 dark:to-cyan-900/20 backdrop-blur-xl p-10 md:p-16 text-center"
           >
             {/* Decorative glows */}
             <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-violet-600/15 blur-[80px] pointer-events-none" />
@@ -531,7 +525,7 @@ const HomePage = () => {
 
             <h2 className="relative text-3xl md:text-5xl font-extrabold mb-4">
               Let&apos;s Build Something
-              <span className="block bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-violet-500 dark:from-violet-400 to-cyan-500 dark:to-cyan-400 bg-clip-text text-transparent">
                 Together
               </span>
             </h2>
@@ -542,7 +536,7 @@ const HomePage = () => {
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="h-13 px-9 text-base font-semibold rounded-2xl bg-white text-black hover:bg-gray-100 hover:-translate-y-1 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer"
+                  className="h-13 px-9 text-base font-semibold rounded-2xl bg-foreground text-background hover:opacity-90 hover:-translate-y-1 active:scale-95 transition-all shadow-[0_0_30px_rgba(139,92,246,0.2)] cursor-pointer"
                 >
                   Get In Touch
                 </Button>
@@ -551,7 +545,7 @@ const HomePage = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-13 px-9 text-base font-semibold rounded-2xl bg-white/5 border-white/20 backdrop-blur-md hover:bg-white/10 hover:border-white/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                  className="h-13 px-9 text-base font-semibold rounded-2xl bg-black/5 dark:bg-white/5 border-black/20 dark:border-white/20 backdrop-blur-md hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/40 dark:hover:border-white/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <BiLogoLinkedin className="w-5 h-5" />
                   LinkedIn

@@ -17,7 +17,7 @@ export const portfolioData = {
   skills: {
     frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn"],
     backend: ["Next.js API Route", "Prisma", "PostgreSQL", "Microsoft SQL Server"],
-    language: ["Python", "C#", "Java"],
+    language: ["Python", "C#", "Java", "JavaScript/TypeScript", "C/C++ (moderate)"],
     tools: ["Linux (Ubuntu)", "Gemini API", "Figma", "Adobe Premiere Pro"],
   },
   projects: [
