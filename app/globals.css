@@ -123,7 +123,7 @@
   }
 }
 
-/* ── Light-mode overrides for glass / opacity utilities ──────────────── */
+/* Light-mode overrides for glass / opacity utilities */
 /* These replace the white/X opacities (designed for dark) with
    dark/X equivalents so cards, borders and badges remain visible
    when the light theme is active. */
@@ -133,6 +133,7 @@
   background-color: rgb(0 0 0 / 0.04);
   border-color: rgb(0 0 0 / 0.1);
 }
+
 .dark .glass-surface {
   background-color: rgb(255 255 255 / 0.05);
   border-color: rgb(255 255 255 / 0.1);
