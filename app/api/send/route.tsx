@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const data = await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
-      to: ["nbhapl128844@gmail.com"],
+      to: ["nguyenbahoa04@gmail.com"],
       subject: `Chat request from ${name}`,
       react: ContactNotiEmail({ name, email, message }),
       replyTo: email,
