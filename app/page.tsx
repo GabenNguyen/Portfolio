@@ -45,7 +45,7 @@ const HomePage = () => {
         <div className="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-blue-600/10 dark:bg-blue-600/8 blur-[130px]" />
         <div className="absolute top-[45%] left-[55%] w-[35%] h-[35%] rounded-full bg-pink-600/8 dark:bg-pink-600/6 blur-[120px]" />
         {/* Subtle grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_30%,#000_60%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-size-[5rem_5rem] mask-[radial-gradient(ellipse_70%_70%_at_50%_30%,#000_60%,transparent_100%)]" />
       </div>
 
       {/* HERO */}
@@ -71,12 +71,12 @@ const HomePage = () => {
               <div className="space-y-4">
                 <motion.h1 {...fadeUp(0.35)} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
                   <span className="block text-foreground/90">Hi, I&apos;m</span>
-                  <span className="block mt-1 bg-gradient-to-r from-violet-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent pb-2">
+                  <span className="block mt-1 bg-linear-to-r from-violet-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent pb-2">
                     Ba Hoa NGUYEN
                   </span>
                 </motion.h1>
 
-                <motion.div {...fadeUp(0.5)} className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium min-h-[44px]">
+                <motion.div {...fadeUp(0.5)} className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium min-h-11">
                   Passionate about{" "}
                   <TypeAnimation
                     sequence={[
@@ -91,7 +91,7 @@ const HomePage = () => {
                     cursor={true}
                     repeat={Infinity}
                     speed={60}
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-bold"
+                    className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 font-bold"
                   />
                 </motion.div>
               </div>
@@ -177,7 +177,7 @@ const HomePage = () => {
                       whileTap={{ scale: 0.95 }}
                       className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-lg"
                     >
-                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-purple-500/40 to-indigo-500/40 blur-md" />
+                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-linear-to-br from-purple-500/40 to-indigo-500/40 blur-md" />
                       <BiLogoGithub className="relative w-6 h-6 text-foreground/80 group-hover:text-foreground transition-colors" />
                     </motion.div>
                   </Link>
@@ -187,7 +187,7 @@ const HomePage = () => {
                       whileTap={{ scale: 0.95 }}
                       className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-lg"
                     >
-                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-blue-500/40 to-cyan-500/40 blur-md" />
+                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-linear-to-br from-blue-500/40 to-cyan-500/40 blur-md" />
                       <BiLogoLinkedin className="relative w-6 h-6 text-foreground/80 group-hover:text-foreground transition-colors" />
                     </motion.div>
                   </Link>
@@ -202,7 +202,7 @@ const HomePage = () => {
               transition={{ delay: 0.5, duration: 1.1, type: "spring", stiffness: 45 }}
               className="w-full xl:w-[45%] flex justify-center items-center relative mt-12 xl:mt-0 z-10"
             >
-              <div className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[460px] md:h-[460px]">
+              <div className="relative w-75 h-75 sm:w-100 sm:h-100 md:w-115 md:h-115">
 
                 {/* Outer conic glow ring */}
                 <motion.div
@@ -241,7 +241,7 @@ const HomePage = () => {
                   className="absolute inset-10 rounded-[2.5rem] bg-white/60 dark:bg-black/20 border-2 border-black/10 dark:border-white/10 backdrop-blur-2xl shadow-2xl overflow-hidden p-2 group"
                   style={{ boxShadow: "0 25px 50px -12px rgba(139,92,246,0.25), inset 0 0 20px rgba(139,92,246,0.05)" }}
                 >
-                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-black/5 dark:border-white/5">
+                  <div className="relative w-full h-full rounded-4xl overflow-hidden bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-black/5 dark:border-white/5">
                     <Image
                       src={profileImg}
                       alt="Profile of Gaben Nguyen"
@@ -253,7 +253,7 @@ const HomePage = () => {
                     <div className="absolute inset-0 shadow-[inset_0_-80px_60px_-20px_rgba(0,0,0,0.4)] pointer-events-none" />
                   </div>
                   {/* Shimmer */}
-                  <div className="absolute top-0 left-[-100%] w-[40%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none" />
+                  <div className="absolute top-0 -left-full w-[40%] h-[200%] bg-linear-to-r from-transparent via-white/20 to-transparent rotate-30 group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none" />
                 </motion.div>
 
                 {/* Floating badge — Tech stack */}
@@ -263,7 +263,7 @@ const HomePage = () => {
                   transition={{ opacity: { delay: 1.4, duration: 0.5 }, scale: { delay: 1.4, duration: 0.5, type: "spring" }, y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.4 } }}
                   className="absolute top-[18%] -right-4 sm:-right-8 px-4 py-3 rounded-2xl bg-white/90 dark:bg-black/50 backdrop-blur-xl border border-black/15 dark:border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
                 >
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-inner">
+                  <div className="w-9 h-9 rounded-full bg-linear-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-inner">
                     <span className="text-white font-bold text-base">⚡</span>
                   </div>
                   <div className="flex flex-col">
@@ -279,7 +279,7 @@ const HomePage = () => {
                   transition={{ opacity: { delay: 1.7, duration: 0.5 }, scale: { delay: 1.7, duration: 0.5, type: "spring" }, y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.7 } }}
                   className="absolute bottom-[18%] -left-4 sm:-left-8 px-4 py-3 rounded-2xl bg-white/90 dark:bg-black/50 backdrop-blur-xl border border-black/15 dark:border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center gap-3 z-20"
                 >
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-inner">
+                  <div className="w-9 h-9 rounded-full bg-linear-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-inner">
                     <span className="text-white font-bold text-base">💡</span>
                   </div>
                   <div className="flex flex-col">
@@ -325,10 +325,10 @@ const HomePage = () => {
               <motion.div
                 key={label}
                 variants={fadeUp(0)}
-                className="group relative overflow-hidden rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 text-center hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all duration-300"
+                className="group relative overflow-hidden rounded-2xl bg-black/3 dark:bg-white/3 border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 text-center hover:border-black/20 dark:hover:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                <div className="absolute inset-0 bg-linear-to-br from-violet-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="text-3xl md:text-4xl font-extrabold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
                   {value}
                 </div>
                 <div className="text-sm text-muted-foreground mt-1 font-medium">{label}</div>
@@ -371,7 +371,7 @@ const HomePage = () => {
                 <motion.div
                   key={category}
                   variants={fadeUp(0)}
-                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${meta.gradient} border ${meta.border} backdrop-blur-sm p-6 hover:scale-[1.02] transition-transform duration-300`}
+                  className={`group relative overflow-hidden rounded-2xl bg-linear-to-br ${meta.gradient} border ${meta.border} backdrop-blur-sm p-6 hover:scale-[1.02] transition-transform duration-300`}
                 >
                   {/* Category header */}
                   <div className="flex items-center gap-3 mb-5">
@@ -386,7 +386,7 @@ const HomePage = () => {
                     {items.map((skill) => (
                       <span
                         key={skill}
-                        className="inline-block px-2.5 py-1 rounded-lg text-xs font-medium bg-black/[0.06] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 text-muted-foreground hover:text-foreground hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors"
+                        className="inline-block px-2.5 py-1 rounded-lg text-xs font-medium bg-black/6 dark:bg-white/8 border border-black/10 dark:border-white/10 text-muted-foreground hover:text-foreground hover:bg-black/9 dark:hover:bg-white/12 transition-colors"
                       >
                         {skill}
                       </span>
@@ -436,11 +436,11 @@ const HomePage = () => {
               <motion.div
                 key={project.name}
                 variants={fadeUp(0)}
-                className="group relative overflow-hidden rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all duration-400"
+                className="group relative overflow-hidden rounded-2xl bg-black/3 dark:bg-white/3 border border-black/10 dark:border-white/10 backdrop-blur-sm p-6 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-400"
               >
                 {/* Accent gradient per card */}
                 <div
-                  className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${index % 2 === 0
+                  className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br ${index % 2 === 0
                     ? "from-violet-600/8 via-transparent to-transparent"
                     : "from-cyan-600/8 via-transparent to-transparent"
                     }`}
@@ -517,7 +517,7 @@ const HomePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7 }}
-            className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-violet-500/10 dark:from-violet-900/30 via-background to-cyan-500/10 dark:to-cyan-900/20 backdrop-blur-xl p-10 md:p-16 text-center"
+            className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-linear-to-br from-violet-500/10 dark:from-violet-900/30 via-background to-cyan-500/10 dark:to-cyan-900/20 backdrop-blur-xl p-10 md:p-16 text-center"
           >
             {/* Decorative glows */}
             <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-violet-600/15 blur-[80px] pointer-events-none" />
@@ -525,7 +525,7 @@ const HomePage = () => {
 
             <h2 className="relative text-3xl md:text-5xl font-extrabold mb-4">
               Let&apos;s Build Something
-              <span className="block bg-gradient-to-r from-violet-500 dark:from-violet-400 to-cyan-500 dark:to-cyan-400 bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-violet-500 dark:from-violet-400 to-cyan-500 dark:to-cyan-400 bg-clip-text text-transparent">
                 Together
               </span>
             </h2>

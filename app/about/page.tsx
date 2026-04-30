@@ -24,6 +24,7 @@ const softSkills = [
   "Team player",
   "Resilience",
   "Adaptive",
+  "Excellent Time Management",
   "Billingual communicator (Vietnamese and English)",
 ];
 
@@ -56,14 +57,14 @@ const projects = [
       "PostgreSQL",
       "Clerk",
       "TypeScript",
-      "Gemini API",
+      "OpenAI GPT-OSS 20B/120B",
       "Framer Motion",
     ],
   },
   {
     title: "Personal Portfolio",
     slug: "/project",
-    tech: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
+    tech: ["Next.js", "TypeScript", "TailwindCSS", "Gemini 2.5 Flash", "LFM2.5 1.2B", "Framer Motion"],
   },
   {
     title: "AI Resume Analyser",
@@ -72,6 +73,7 @@ const projects = [
       "Next.js",
       "TypeScript",
       "Gemini API",
+      "NVIDIA Nemotron Nano 12B V2",
       "Framer Motion",
       "Shadcn"
     ],
@@ -96,7 +98,7 @@ const AboutPage = () => {
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
         <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-600/10 blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
       </div>
 
       {/* Floating Orbs mimicking the original bg */}
@@ -130,7 +132,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)] transition-all duration-500"
+          className="bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)] transition-all duration-500"
         >
           <h2 className="text-3xl font-bold mb-4 text-foreground">Professional Profile</h2>
           <p className="text-lg leading-relaxed font-light">
@@ -175,7 +177,7 @@ const AboutPage = () => {
         >
           <h2 className="text-2xl font-bold mb-6 text-foreground">Technical Skills</h2>
           <div className="mb-8">
-            <p className="font-semibold text-lg mb-4 text-purple-400 tracking-wide uppercase text-sm">
+            <p className="font-semibold mb-4 text-purple-400 tracking-wide uppercase text-sm">
               Frontend
             </p>
             <div className="flex flex-wrap gap-3">
@@ -185,7 +187,7 @@ const AboutPage = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
+                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
                 >
                   {skill}
                 </motion.div>
@@ -195,7 +197,7 @@ const AboutPage = () => {
 
           {/* Backend */}
           <div>
-            <p className="font-semibold text-lg mb-4 text-pink-400 tracking-wide uppercase text-sm">
+            <p className="font-semibold mb-4 text-pink-400 tracking-wide uppercase text-sm">
               Backend
             </p>
             <div className="flex flex-wrap gap-3">
@@ -205,7 +207,27 @@ const AboutPage = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
+                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
+                >
+                  {skill}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Operating Systems */}
+          <div>
+            <p className="font-semibold mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
+              Operating System
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {operatingSystems.map((skill, i) => (
+                <motion.div
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
                 >
                   {skill}
                 </motion.div>
@@ -215,7 +237,7 @@ const AboutPage = () => {
 
           {/* Other tools */}
           <div>
-            <p className="font-semibold text-lg mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
+            <p className="font-semibold mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
               Other tools
             </p>
             <div className="flex flex-wrap gap-3">
@@ -225,7 +247,7 @@ const AboutPage = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
+                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
                 >
                   {skill}
                 </motion.div>
@@ -239,10 +261,10 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
+          className="bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
         >
           {/* Subtle glow highlight on edge */}
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
           <h2 className="text-2xl font-bold mb-6 text-foreground">Education</h2>
           <ul className="space-y-6 text-lg text-muted-foreground font-light">
             <li className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-purple-500 before:rounded-full before:shadow-[0_0_10px_rgba(168,85,247,0.8)]">
@@ -250,7 +272,7 @@ const AboutPage = () => {
               Bachelor of Information Technology
               <br />
               <div className="mt-2" />
-              GPA: <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-bold ml-1">6.18/7.0</span> |
+              GPA: <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 font-bold ml-1">6.18/7.0</span> |
               Expected Graduation: 2027
               <br />
               <div className="mt-2" />
@@ -271,7 +293,7 @@ const AboutPage = () => {
               <span className="font-medium text-gray-300">Cohort: 2022 - 2024</span>
               <br />
               <div className="mt-1" />
-              GPA: <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400 font-bold ml-1">2.97 / 4.0</span>
+              GPA: <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-400 to-rose-400 font-bold ml-1">2.97 / 4.0</span>
             </li>
           </ul>
         </motion.div>
@@ -281,9 +303,9 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="max-w-4xl w-full bg-white/5 dark:bg-black/20 p-8 rounded-[2rem] shadow-2xl text-left backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
+          className="max-w-4xl w-full bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl text-left backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-blue-500/10 blur-[80px]" />
+          <div className="absolute top-0 right-0 w-50 h-50 bg-blue-500/10 blur-[80px]" />
           <h2 className="text-2xl font-bold mb-6 text-foreground relative z-10">Experience</h2>
           <ul className="space-y-8 relative z-10">
             {experiences.map((exp) => (
@@ -333,9 +355,9 @@ const AboutPage = () => {
               >
                 <a
                   href={project.slug}
-                  className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all rounded-[1.5rem] backdrop-blur-xl shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] relative overflow-hidden"
+                  className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all rounded-3xl backdrop-blur-xl shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] relative overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/3 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
                   <div>
                     <p className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors">{project.title}</p>
                     <div className="flex flex-wrap gap-2 mt-3">

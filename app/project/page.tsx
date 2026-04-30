@@ -17,7 +17,7 @@ const projects = [
       "Tailwind CSS",
       "Framer Motion",
       "Clerk",
-      "Gemini API",
+      "OpenAI GPT-OSS 20B/120B",
       "Shadcn",
     ],
     accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
@@ -30,9 +30,13 @@ const projects = [
       "Next.js",
       "TypeScript",
       "Tailwind CSS",
-      "Framer Motion",
+      "LFM2.5 1.2B",
+      "Gemini 2.5 Flash",
+      "Resend",
       "Shadcn",
       "Toastify",
+      "Framer Motion",
+
     ],
     accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
   },
@@ -46,6 +50,7 @@ const projects = [
       "Tailwind CSS",
       "Framer Motion",
       "Shadcn",
+      "Gemini 2.5 Flash",
     ],
     accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
   },
@@ -59,7 +64,7 @@ export default function ProjectPage() {
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
         <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-600/10 blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
       </div>
 
       {/* Floating Orbs mimicking the original blobs */}
@@ -108,28 +113,30 @@ export default function ProjectPage() {
             >
               {/* Glow border */}
               <div
-                className={`absolute -inset-px rounded-[2rem] bg-gradient-to-r ${project.accent} opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100`}
+                className={`absolute -inset-px rounded-4xl bg-linear-to-r ${project.accent} opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100`}
               />
 
               <Link
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative flex flex-col h-full rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-2xl p-8 shadow-2xl transition-all hover:bg-white/10 overflow-hidden"
+                className="relative flex flex-col h-full rounded-4xl border border-white/10 bg-white/5 backdrop-blur-2xl p-8 shadow-2xl transition-all hover:bg-white/10 overflow-hidden"
               >
                 {/* Overlay gradient slide */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.05] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
 
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4 relative z-10">
-                  <h2 className="text-2xl font-bold text-foreground drop-shadow-sm transition-colors">{project.title}</h2>
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-purple-400/50 group-hover:bg-white/10 transition-colors flex-shrink-0">
+                  <h2 className="text-2xl font-bold text-foreground drop-shadow-sm transition-colors">
+                    {project.title}
+                  </h2>
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-purple-400/50 group-hover:bg-white/10 transition-colors shrink-0">
                     <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-purple-300 transition-colors group-hover:rotate-12 group-hover:scale-110" />
                   </div>
                 </div>
 
                 {/* Subtitle */}
-                <p className="mt-4 text-muted-foreground/90 text-base font-light flex-grow relative z-10">
+                <p className="mt-4 text-muted-foreground/90 text-base font-light grow relative z-10">
                   {project.subtitle}
                 </p>
 
@@ -148,7 +155,9 @@ export default function ProjectPage() {
                 {/* Footer */}
                 <div className="mt-8 text-sm font-bold text-purple-400 group-hover:text-pink-400 transition-colors flex items-center gap-2 relative z-10">
                   <span>View project</span>
-                  <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
+                  <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
+                    ↗
+                  </span>
                 </div>
               </Link>
             </motion.div>

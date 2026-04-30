@@ -65,7 +65,7 @@ function NavBar() {
             <div className="flex items-center gap-3 sm:gap-4">
               {/* Download CV Button */}
               <a
-                href="/Resume_Ba_Hoa_NGUYEN.pdf"
+                href="/Resume_Ba_Hoa_NGUYEN_New.pdf"
                 download
                 className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 font-semibold py-2 px-4 sm:py-2.5 sm:px-5 rounded-full transition-colors active:scale-95"
               >
