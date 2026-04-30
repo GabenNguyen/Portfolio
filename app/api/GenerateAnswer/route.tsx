@@ -1,17 +1,15 @@
 import { GoogleGenAI } from "@google/genai";
 import { portfolioData } from "@/config/portfolio-data";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
 export async function POST(req: Request) {
     try {
-        const {message} = await req.json();
+        const { message } = await req.json();
 
-        if(!message) {
-            return Response.json({error: "Message not found!"}, {status: 400});
+        if (!message) {
+            return Response.json({ error: "Message not found!" }, { status: 400 });
         }
 
-        const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
+        const ai = new GoogleGenAI({});
 
         const prompt = `
         You are a professional AI assistant representing the portfolio of ${portfolioData.name}.
@@ -103,7 +101,7 @@ export async function POST(req: Request) {
             
             Do NOT include markdown or code blocks.
         `;
-        
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: `${prompt}\n\nUser: ${message}`,
@@ -115,7 +113,7 @@ export async function POST(req: Request) {
 
         const outputData = JSON.parse(formattedText);
 
-        return Response.json(outputData, {status: 200});
+        return Response.json(outputData, { status: 200 });
 
     } catch (err: any) {
         console.error("Gemini API Error:", err);

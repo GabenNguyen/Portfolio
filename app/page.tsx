@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MoveUpRight, FolderOpen, FileUser, ExternalLink, Github, Code2, Database, Wrench, Layers, GraduationCap, MapPin } from "lucide-react";
+import { Phone, Mail, MoveUpRight, FolderOpen, FileUser, ExternalLink, Code2, Database, Wrench, Layers, GraduationCap, MapPin } from "lucide-react";
 import { BiLogoGithub, BiLogoLinkedin } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
@@ -458,7 +458,7 @@ const HomePage = () => {
                         whileTap={{ scale: 0.92 }}
                         className="flex items-center justify-center w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all"
                       >
-                        <Github className="w-4 h-4 text-foreground/70" />
+                        <BiLogoGithub className="w-4 h-4 text-foreground/70" />
                       </motion.div>
                     </Link>
                     <Link href={project.github} target="_blank" rel="noopener noreferrer">
