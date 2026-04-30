@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import generateResponse from "@/lib/ai/ai-response";
 import { portfolioData } from "@/config/portfolio-data";
 
 export async function POST(req: Request) {
@@ -8,8 +8,6 @@ export async function POST(req: Request) {
         if (!message) {
             return Response.json({ error: "Message not found!" }, { status: 400 });
         }
-
-        const ai = new GoogleGenAI({});
 
         const prompt = `
         You are a professional AI assistant representing the portfolio of ${portfolioData.name}.
@@ -102,18 +100,12 @@ export async function POST(req: Request) {
             Do NOT include markdown or code blocks.
         `;
 
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: `${prompt}\n\nUser: ${message}`,
-        })
+        const response = await generateResponse(`${prompt}\n\nUser: ${message}`);
 
-        const text = response.text ?? "";
+        const cleanedText = response.output.replace(/```json|```/g, "").trim();
 
-        const formattedText = text.replace(/```json|```/g, "").trim();
+        return Response.json(JSON.parse(cleanedText), { status: 200 });
 
-        const outputData = JSON.parse(formattedText);
-
-        return Response.json(outputData, { status: 200 });
 
     } catch (err: any) {
         console.error("Gemini API Error:", err);
