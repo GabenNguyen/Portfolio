@@ -14,7 +14,7 @@ export default function TypingIndicator() {
         {[0, 1, 2].map((dot) => (
           <motion.span
             key={dot}
-            className="w-1.5 h-1.5 bg-cyan-500 rounded-full"
+            className="w-1.5 h-1.5 bg-blue-500 rounded-full"
             animate={{
               y: [0, -4, 0],
               opacity: [0.5, 1, 0.5],

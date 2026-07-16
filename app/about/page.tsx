@@ -1,20 +1,21 @@
-/* eslint-disable react-hooks/purity */
 "use client";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { ArrowUpRight } from "lucide-react";
 
 const frontEndSkills = [
   "React",
   "Next.js",
   "TypeScript",
-  "Framer Motion",
   "Tailwind CSS",
+  "Framer Motion",
 ];
 
 const backEndSkills = ["Prisma", "PostgreSQL", "MSSQL", "Python", "Neon (database)"];
 
 const operatingSystems = ["Windows", "Linux (Ubuntu)", "MacOS"];
 
-const otherTools = ["Figma", "Adobe Premiere Pro", "CapCut", "Git", "GitHub"]
+const otherTools = ["Figma", "Adobe Premiere Pro", "CapCut", "Git", "GitHub"];
 
 const softSkills = [
   "Communication",
@@ -75,10 +76,9 @@ const projects = [
       "Gemini API",
       "NVIDIA Nemotron Nano 12B V2",
       "Framer Motion",
-      "Shadcn"
+      "Shadcn",
     ],
-  }
-
+  },
 ];
 
 const hobbies = [
@@ -91,51 +91,93 @@ const hobbies = [
 ];
 
 const AboutPage = () => {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".about-hero > *", {
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.12,
+        });
+
+        gsap.utils.toArray<HTMLElement>(".stagger-item").forEach((el) => {
+          gsap.from(el, {
+            opacity: 0,
+            y: 36,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 88%" },
+          });
+        });
+
+        gsap.to(".orb", {
+          y: "random(-30, 30)",
+          x: "random(-20, 20)",
+          duration: "random(8, 14)",
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          stagger: { each: 0.4, from: "random" },
+        });
+
+        gsap.to(".about-blob-1", {
+          yPercent: -24,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
+        gsap.to(".about-blob-2", {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(".about-hero > *, .stagger-item", { opacity: 1, y: 0 });
+      });
+    },
+    { scope: root }
+  );
+
   return (
-    <main className="relative min-h-screen bg-background text-foreground overflow-hidden font-sans">
-      {/* Abstract Glowing Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-600/10 blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+    <main ref={root} className="relative min-h-screen overflow-hidden bg-background text-foreground font-sans">
+
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="about-blob-1 absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="about-blob-2 absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-indigo-600/10 blur-[120px]" />
+        <div className="about-blob-1 absolute top-[40%] left-[60%] h-[30%] w-[30%] rounded-full bg-sky-600/8 blur-[100px]" />
+        <div className="dot-grid absolute inset-0 mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50" />
+        {[
+          "top-[12%] left-[8%]",
+          "top-[28%] right-[12%]",
+          "top-[55%] left-[15%]",
+          "top-[70%] right-[18%]",
+          "top-[40%] left-[45%]",
+          "top-[85%] left-[30%]",
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className={`orb absolute h-20 w-20 rounded-full bg-blue-500/10 blur-xl dark:bg-indigo-500/10 ${pos}`}
+          />
+        ))}
       </div>
 
-      {/* Floating Orbs mimicking the original bg */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          suppressHydrationWarning
-          key={i}
-          animate={{ y: [0, 25, 0], x: [0, 15, 0] }}
-          transition={{ repeat: Infinity, duration: 10 + i, delay: i }}
-          className="absolute w-20 h-20 rounded-full bg-indigo-500/10 dark:bg-purple-500/10 blur-xl pointer-events-none z-0"
-          style={{
-            top: `${Math.random() * 90}%`,
-            left: `${Math.random() * 90}%`,
-          }}
-        />
-      ))}
+      <section className="relative z-10 mx-auto w-full max-w-4xl px-4 py-28">
+        <div className="about-hero mb-12 text-center">
+          <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase">Get to know me</span>
+          <h1 className="text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">About Me</h1>
+        </div>
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-28 flex flex-col items-center gap-12 relative z-10 w-full">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg text-center pb-2 tracking-tight"
-        >
-          About Me
-        </motion.h1>
-
-        {/* Profile Card */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.1)] transition-all duration-500"
-        >
-          <h2 className="text-3xl font-bold mb-4 text-foreground">Professional Profile</h2>
-          <p className="text-lg leading-relaxed font-light">
+        {/* Profile card */}
+        <div className="stagger-item rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
+          <h2 className="mb-4 text-3xl font-bold">Professional Profile</h2>
+          <p className="text-lg font-light leading-relaxed">
             Motivated Information Technology student, currently pursuing the Bachelor of Information Technology at the
             Adelaide University, with hands-on experience building production-grade web applications using Next.js/React,
             TypeScript, Tailwind CSS and AI APIs. Rapidly adapts to new technologies and frameworks, consistently
@@ -143,190 +185,93 @@ const AboutPage = () => {
             solutions that improve outcomes, combining strong communication and problem-solving to translate complex
             requirements into clear, effective results across both technical and client-facing environments.
           </p>
-        </motion.div>
+        </div>
 
         {/* Soft Skills */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="max-w-4xl w-full text-left"
-        >
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Soft Skills</h2>
+        <div className="stagger-item mt-12 text-left">
+          <h2 className="mb-6 text-2xl font-bold">Soft Skills</h2>
           <div className="flex flex-wrap gap-3">
-            {softSkills.map((skill, skillIndex) => (
-              <motion.div
+            {softSkills.map((skill) => (
+              <span
                 key={skill}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: skillIndex * 0.05 }}
-                className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-foreground font-medium shadow-lg hover:scale-105 hover:bg-white/10 hover:border-green-400/50 hover:shadow-[0_0_15px_rgba(74,222,128,0.2)] transition-all cursor-default backdrop-blur-md text-sm md:text-base"
+                className="cursor-default rounded-full border border-black/10 bg-black/3 px-5 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-blue-500/50 hover:bg-blue-500/10 dark:border-white/10 dark:bg-white/5 md:text-base"
               >
                 {skill}
-              </motion.div>
+              </span>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Technical Skills */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="max-w-4xl w-full text-left"
-        >
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Technical Skills</h2>
-          <div className="mb-8">
-            <p className="font-semibold mb-4 text-purple-400 tracking-wide uppercase text-sm">
-              Frontend
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {frontEndSkills.map((skill, i) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
-                >
-                  {skill}
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        <div className="stagger-item mt-12 text-left">
+          <h2 className="mb-6 text-2xl font-bold">Technical Skills</h2>
 
-          {/* Backend */}
-          <div>
-            <p className="font-semibold mb-4 text-pink-400 tracking-wide uppercase text-sm">
-              Backend
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {backEndSkills.map((skill, i) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
-                >
-                  {skill}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Operating Systems */}
-          <div>
-            <p className="font-semibold mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
-              Operating System
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {operatingSystems.map((skill, i) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
-                >
-                  {skill}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Other tools */}
-          <div>
-            <p className="font-semibold mt-5 mb-4 text-pink-400 tracking-wide uppercase text-sm">
-              Other tools
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {otherTools.map((skill, i) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="px-5 py-2.5 rounded-xl bg-linear-to-br from-white/5 to-white/5 border border-white/10 text-foreground font-medium shadow-md hover:scale-110 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all text-sm md:text-base backdrop-blur-sm cursor-default"
-                >
-                  {skill}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+          <SkillGroup title="Frontend" items={frontEndSkills} tint="border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-300" />
+          <SkillGroup title="Backend" items={backEndSkills} tint="border-indigo-500/40 bg-indigo-500/10 text-indigo-600 dark:text-indigo-300" />
+          <SkillGroup title="Operating System" items={operatingSystems} tint="border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-300" />
+          <SkillGroup title="Other tools" items={otherTools} tint="border-cyan-500/40 bg-cyan-500/10 text-cyan-600 dark:text-cyan-300" />
+        </div>
 
         {/* Education */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl max-w-4xl w-full backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
-        >
-          {/* Subtle glow highlight on edge */}
-          <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Education</h2>
-          <ul className="space-y-6 text-lg text-muted-foreground font-light">
-            <li className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-purple-500 before:rounded-full before:shadow-[0_0_10px_rgba(168,85,247,0.8)]">
-              <span className="font-semibold text-foreground text-xl">Adelaide University</span> –
+        <div className="stagger-item mt-12 rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
+          <div className="absolute left-0 top-0 hidden h-px w-full bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
+          <h2 className="mb-6 text-2xl font-bold">Education</h2>
+          <ul className="space-y-6 text-lg font-light text-muted-foreground">
+            <li className="relative pl-6 before:absolute before:top-2 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-blue-500 before:shadow-[0_0_10px_rgba(59,130,246,0.8)]">
+              <span className="text-xl font-semibold text-foreground">Adelaide University</span> –
               Bachelor of Information Technology
               <br />
-              <div className="mt-2" />
-              GPA: <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500 font-bold ml-1">6.18/7.0</span> |
+              <span className="mt-2 block" />
+              GPA: <span className="ml-1 font-bold bg-linear-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">6.18/7.0</span> |
               Expected Graduation: 2027
               <br />
-              <div className="mt-2" />
-              <span className="font-medium inline-block bg-white/5 px-3 py-1 rounded-md border border-white/10 mt-1 shadow-sm">
+              <span className="mt-2 block" />
+              <span className="mt-1 inline-block rounded-md border border-black/10 bg-black/3 px-3 py-1 font-medium shadow-sm dark:border-white/10 dark:bg-white/5">
                 Recipient of{" "}
-                <span className="text-purple-400 font-bold">
+                <span className="font-bold text-blue-500 dark:text-blue-400">
                   UniSA International Merit Scholarship
                 </span>{" "}
                 (15% deduction in tuition fee)
               </span>
             </li>
-            <div className="w-full h-px bg-white/10 my-4" />
-            <li className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-pink-500 before:rounded-full before:shadow-[0_0_10px_rgba(236,72,153,0.8)]">
-              <span className="font-semibold text-foreground text-xl">International University</span> –
+            <div className="my-4 h-px w-full bg-black/10 dark:bg-white/10" />
+            <li className="relative pl-6 before:absolute before:top-2 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-indigo-500 before:shadow-[0_0_10px_rgba(99,102,241,0.8)]">
+              <span className="text-xl font-semibold text-foreground">International University</span> –
               Bachelor of Information Technology, Computer Engineering
               <br />
-              <div className="mt-2" />
-              <span className="font-medium text-gray-300">Cohort: 2022 - 2024</span>
+              <span className="mt-2 block" />
+              <span className="text-gray-500 dark:text-gray-400">Cohort: 2022 - 2024</span>
               <br />
-              <div className="mt-1" />
-              GPA: <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-400 to-rose-400 font-bold ml-1">2.97 / 4.0</span>
+              <span className="mt-1 block" />
+              GPA: <span className="ml-1 font-bold bg-linear-to-r from-indigo-500 to-sky-500 bg-clip-text text-transparent">2.97 / 4.0</span>
             </li>
           </ul>
-        </motion.div>
+        </div>
 
         {/* Experience */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="max-w-4xl w-full bg-white/5 dark:bg-black/20 p-8 rounded-4xl shadow-2xl text-left backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-50 h-50 bg-blue-500/10 blur-[80px]" />
-          <h2 className="text-2xl font-bold mb-6 text-foreground relative z-10">Experience</h2>
-          <ul className="space-y-8 relative z-10">
+        <div className="stagger-item relative mt-12 overflow-hidden rounded-4xl border border-black/10 bg-black/3 p-8 text-left shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-50 w-50 rounded-full bg-blue-500/10 blur-[80px]" />
+          <h2 className="relative z-10 mb-6 text-2xl font-bold">Experience</h2>
+          <ul className="relative z-10 space-y-8">
             {experiences.map((exp) => (
               <li key={exp.title}>
-                <p className="font-bold text-xl">
-                  {exp.title} <span className="text-purple-400">@ {exp.company}</span>
+                <p className="text-xl font-bold">
+                  {exp.title} <span className="text-blue-500 dark:text-blue-400">@ {exp.company}</span>
                 </p>
-                <div className="inline-flex items-center justify-center px-3 py-1 mt-2 text-xs font-semibold tracking-wide bg-white/10 rounded-full border border-white/10">
+                <div className="mt-2 inline-flex items-center justify-center rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs font-semibold tracking-wide dark:border-white/10 dark:bg-white/10">
                   {exp.duration}
                 </div>
-                <p className="text-lg mt-5 font-semibold">Key responsibilities</p>
-                <ul className="mt-3 list-disc pl-5 space-y-2 text-base font-light marker:text-purple-500">
+                <p className="mt-5 text-lg font-semibold">Key responsibilities</p>
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-base font-light marker:text-blue-500">
                   {exp.description.map((point, index) => (
                     <li key={index}>{point}</li>
                   ))}
                 </ul>
-                <p className="text-lg mt-5 font-semibold">Achievements</p>
-                <ul className="mt-3 list-none space-y-3 text-base font-light">
+                <p className="mt-5 text-lg font-semibold">Achievements</p>
+                <ul className="mt-3 space-y-3 text-base font-light">
                   {exp.achievement.map((achievement, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <span className="text-pink-400 text-xl leading-5">★</span>
+                      <span className="text-lg leading-5 text-indigo-500">★</span>
                       <span>{achievement}</span>
                     </li>
                   ))}
@@ -334,78 +279,77 @@ const AboutPage = () => {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Projects */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          className="max-w-4xl w-full"
-        >
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Projects Preview</h2>
-
+        <div className="stagger-item mt-12">
+          <h2 className="mb-6 text-2xl font-bold">Projects Preview</h2>
           <ul className="flex flex-col gap-4">
-            {projects.map((project, i) => (
-              <motion.li
-                key={project.title}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.08 }}
-              >
+            {projects.map((project) => (
+              <li key={project.title}>
                 <a
                   href={project.slug}
-                  className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all rounded-3xl backdrop-blur-xl shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] relative overflow-hidden"
+                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-black/3 p-6 backdrop-blur-xl shadow-lg transition-all hover:border-blue-500/50 hover:bg-black/5 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/50 dark:hover:bg-white/10 md:flex-row md:items-center md:justify-between"
                 >
-                  <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/3 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                  <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-blue-500/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                   <div>
-                    <p className="text-xl font-bold text-foreground group-hover:text-purple-400 transition-colors">{project.title}</p>
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <p className="text-xl font-bold text-foreground transition-colors group-hover:text-blue-500 dark:group-hover:text-blue-400">{project.title}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="text-xs font-semibold tracking-wide px-3 py-1 rounded-full bg-white/10 dark:bg-black/40 border border-white/5"
+                          className="rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs font-semibold tracking-wide dark:border-white/5 dark:bg-black/40"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="mt-4 md:mt-0 flex items-center gap-2 text-sm text-purple-400 font-semibold group-hover:text-pink-400 transition-colors">
+                  <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-blue-500 transition-colors group-hover:text-indigo-500 dark:text-blue-400 md:mt-0">
                     <span>View Project</span>
-                    <span className="text-lg leading-none transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
+                    <ArrowUpRight className="text-lg leading-none transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                   </div>
                 </a>
-              </motion.li>
+              </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Hobbies */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.6 }}
-          className="max-w-4xl w-full text-left"
-        >
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Hobbies & Interests</h2>
+        <div className="stagger-item mt-12 text-left">
+          <h2 className="mb-6 text-2xl font-bold">Hobbies &amp; Interests</h2>
           <div className="flex flex-wrap gap-3">
-            {hobbies.map((hobby, i) => (
-              <motion.div
+            {hobbies.map((hobby) => (
+              <span
                 key={hobby}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-foreground font-medium shadow-lg hover:scale-105 hover:bg-white/10 hover:border-pink-400/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.2)] transition-all cursor-pointer backdrop-blur-md text-sm md:text-base"
+                className="cursor-pointer rounded-full border border-black/10 bg-black/3 px-5 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-indigo-500/50 hover:bg-indigo-500/10 dark:border-white/10 dark:bg-white/5 md:text-base"
               >
                 {hobby}
-              </motion.div>
+              </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
     </main>
   );
 };
+
+function SkillGroup({ title, items, tint }: { title: string; items: string[]; tint: string }) {
+  return (
+    <div className="mb-8">
+      <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-blue-500">{title}</p>
+      <div className="flex flex-wrap gap-3">
+        {items.map((skill) => (
+          <span
+            key={skill}
+            className={`cursor-default rounded-xl border px-5 py-2.5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:scale-[1.03] dark:bg-white/5 md:text-base ${tint}`}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default AboutPage;

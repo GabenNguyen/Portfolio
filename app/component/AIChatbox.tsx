@@ -47,18 +47,18 @@ export default function AIChatbox() {
         sender: "user",
         timestamp: new Date(),
       };
-      
+
       setMessages((prev) => [...prev, userMessage]);
       setInputValue("");
-      
+
       const response = await fetch("/api/GenerateAnswer", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userMessage.text })
         });
-        
+
       const answer = await response.json();
-      
+
       if(!response.ok) {
         const errorMessage: Message = {
         id: crypto.randomUUID(),
@@ -69,7 +69,7 @@ export default function AIChatbox() {
         setMessages((prev) => [...prev, errorMessage]);
         return;
       }
-      
+
       const botResponse: Message = {
         id: crypto.randomUUID(),
         text: answer.outputData,
@@ -101,51 +101,51 @@ export default function AIChatbox() {
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.5, y: 20 }}
-            transition={{ 
-              type: "spring", 
-              damping: 20, 
+            transition={{
+              type: "spring",
+              damping: 20,
               stiffness: 300,
               mass: 0.8
             }}
-            className="absolute bottom-full right-0 mb-4 w-80 sm:w-96 h-[500px] bg-zinc-950 rounded-2xl shadow-2xl border border-cyan-500/30 flex flex-col overflow-hidden relative"
+            className="absolute bottom-full right-0 mb-4 flex h-[500px] w-80 flex-col overflow-hidden rounded-2xl border border-blue-500/30 bg-zinc-950 shadow-2xl sm:w-96"
             style={{
-              boxShadow: "0 0 40px rgba(6, 182, 212, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+              boxShadow: "0 0 40px rgba(37, 99, 235, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5)",
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none" />
-            
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-blue-500/5 via-transparent to-indigo-500/5" />
+
             {/* Header */}
-            <div className="p-4 border-b border-cyan-500/20 bg-zinc-900/80 backdrop-blur-xl flex justify-between items-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 pointer-events-none" />
-              <div className="flex items-center gap-3 relative z-10">
+            <div className="relative flex items-center justify-between overflow-hidden border-b border-blue-500/20 bg-zinc-900/80 px-4 py-4 backdrop-blur-xl">
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-blue-500/10 to-indigo-500/10" />
+              <div className="relative z-10 flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/25">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25">
+                    <Bot className="h-5 w-5 text-white" />
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-zinc-950 animate-pulse" />
+                  <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-zinc-950 bg-green-500 animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm text-white flex items-center gap-2">
+                  <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
                     AI Assistant
-                    <span className="text-[10px] px-1.5 py-0.5 bg-cyan-500/20 text-cyan-400 rounded-full border border-cyan-500/30">ONLINE</span>
+                    <span className="rounded-full border border-blue-500/30 bg-blue-500/20 px-1.5 py-0.5 text-[10px] text-blue-400">ONLINE</span>
                   </h3>
-                  <p className="text-xs text-zinc-400 flex items-center gap-1">
-                    <Cpu className="w-3 h-3" />
+                  <p className="flex items-center gap-1 text-xs text-zinc-400">
+                    <Cpu className="h-3 w-3" />
                     Ready to assist
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 cursor-pointer hover:bg-zinc-800 rounded-lg transition-all duration-200 group relative z-10"
+                className="group relative z-10 cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-zinc-800"
                 aria-label="Close chat"
               >
-                <X className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" />
+                <X className="h-5 w-5 text-zinc-400 transition-colors group-hover:text-white" />
               </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+            <div className="flex-1 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent p-4">
               {messages.map((msg) => (
                 <motion.div
                   key={msg.id}
@@ -155,10 +155,10 @@ export default function AIChatbox() {
                   className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+                    className={`max-w-[85%] rounded-2xl p-3 text-sm ${
                       msg.sender === "user"
-                        ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-tr-sm shadow-lg shadow-cyan-500/20"
-                        : "bg-zinc-800/80 text-zinc-100 rounded-tl-sm border border-zinc-700/50 backdrop-blur-sm"
+                        ? "rounded-tr-sm bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/20"
+                        : "rounded-tl-sm border border-zinc-700/50 bg-zinc-800/80 text-zinc-100 backdrop-blur-sm"
                       }`}
                   >
                     {msg.text}
@@ -170,7 +170,7 @@ export default function AIChatbox() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-cyan-500/20 bg-zinc-900/80 backdrop-blur-xl relative">
+            <div className="relative border-t border-blue-500/20 bg-zinc-900/80 p-4 backdrop-blur-xl">
               <div className="relative flex items-center">
                 <input
                   type="text"
@@ -178,28 +178,28 @@ export default function AIChatbox() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyPress}
                   placeholder="Ask me anything..."
-                  className="w-full px-4 py-3 pr-14 bg-zinc-800/80 border border-zinc-700 rounded-xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all backdrop-blur-sm"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800/80 px-4 py-3 pr-14 text-sm text-white placeholder-zinc-500 backdrop-blur-sm transition-all focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
                 />
                 <button
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isThinking}
-                  className="absolute right-1.5 p-2.5 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-95"
+                  className="absolute right-1.5 cursor-pointer rounded-lg bg-linear-to-r from-blue-500 to-indigo-600 p-2.5 text-white transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="h-4 w-4" />
                 </button>
               </div>
             </div>
 
             {/* Decorative corner accents */}
-            <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">
-              <div className="absolute top-3 left-3 w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
-              <div className="absolute top-3 left-6 w-1 h-1 bg-cyan-400/50 rounded-full" />
-              <div className="absolute top-6 left-3 w-1 h-1 bg-cyan-400/50 rounded-full" />
+            <div className="pointer-events-none absolute top-0 left-0 h-16 w-16">
+              <div className="absolute top-3 left-3 h-2 w-2 animate-pulse rounded-full bg-blue-500" />
+              <div className="absolute top-3 left-6 h-1 w-1 rounded-full bg-blue-400/50" />
+              <div className="absolute top-6 left-3 h-1 w-1 rounded-full bg-blue-400/50" />
             </div>
-            <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none">
-              <div className="absolute bottom-3 right-3 w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: "0.5s" }} />
-              <div className="absolute bottom-3 right-6 w-1 h-1 bg-purple-400/50 rounded-full" />
-              <div className="absolute bottom-6 right-3 w-1 h-1 bg-purple-400/50 rounded-full" />
+            <div className="pointer-events-none absolute bottom-0 right-0 h-16 w-16">
+              <div className="absolute bottom-3 right-3 h-2 w-2 animate-pulse rounded-full bg-indigo-500" style={{ animationDelay: "0.5s" }} />
+              <div className="absolute bottom-3 right-6 h-1 w-1 rounded-full bg-indigo-400/50" />
+              <div className="absolute bottom-6 right-3 h-1 w-1 rounded-full bg-indigo-400/50" />
             </div>
           </motion.div>
         )}
@@ -209,13 +209,13 @@ export default function AIChatbox() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative w-14 h-14 bg-gradient-to-br from-cyan-500 to-purple-600 text-white rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center transition-all overflow-hidden"
+        className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25 transition-all"
         style={{
-          boxShadow: "0 8px 32px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0.5)",
+          boxShadow: "0 8px 32px rgba(37, 99, 235, 0.4), 0 0 0 0 rgba(37, 99, 235, 0.5)",
         }}
         aria-label="Toggle chat"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/20 to-transparent" />
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div
@@ -225,7 +225,7 @@ export default function AIChatbox() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <X className="w-6 h-6" />
+              <X className="h-6 w-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -235,14 +235,14 @@ export default function AIChatbox() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <MessageSquare className="w-6 h-6" />
+              <MessageSquare className="h-6 w-6" />
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         {/* Pulsing ring when closed */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-xl animate-ping bg-cyan-400/30 opacity-75" />
+          <span className="absolute inset-0 animate-ping rounded-xl bg-blue-400/30 opacity-75" />
         )}
       </motion.button>
     </div>

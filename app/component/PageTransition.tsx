@@ -1,42 +1,33 @@
 "use client";
-import React from "react";
+import { useRef } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import type { Variants } from "framer-motion";
-
-const variants: Variants = {
-  initial: {
-    opacity: 0,
-    x: 40,
-  },
-
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1], // smooth transition
-    },
-  },
-};
+import { gsap, useGSAP } from "@/lib/gsap";
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          ref.current,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+        );
+      });
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(ref.current, { opacity: 1, y: 0 });
+      });
+    },
+    { dependencies: [pathname], scope: ref }
+  );
+
   return (
-    <>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={pathname}
-          variants={variants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="h-screen w-screen"
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    </>
+    <div ref={ref} key={pathname} className="min-h-screen w-full">
+      {children}
+    </div>
   );
 };
 

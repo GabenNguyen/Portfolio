@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { ToastContainer, toast } from "react-toastify";
 
 const ContactPage = () => {
   const [isSending, setIsSending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const root = useRef<HTMLElement>(null);
 
   const handleFormSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,136 +49,147 @@ const ContactPage = () => {
     return false;
   };
 
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".contact-hero > *", {
+          opacity: 0,
+          y: 20,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.1,
+        });
+        gsap.from(".contact-form", {
+          opacity: 0,
+          y: 28,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power3.out",
+        });
+      });
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(".contact-hero > *, .contact-form", { opacity: 1, y: 0 });
+      });
+    },
+    { scope: root }
+  );
+
   return (
-    <main className="relative min-h-screen bg-background text-foreground overflow-hidden font-mono">
+    <main ref={root} className="relative min-h-screen overflow-hidden bg-background text-foreground font-mono">
       <ToastContainer position="top-center" theme="dark" toastClassName="bg-black/80 backdrop-blur-xl border border-white/10 text-white rounded-2xl shadow-2xl font-mono" />
 
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-500/8 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-violet-500/8 blur-[120px]" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-emerald-500/8 blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-500/8 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-indigo-500/8 blur-[120px]" />
+        <div className="absolute top-[40%] left-[60%] h-[30%] w-[30%] rounded-full bg-sky-500/8 blur-[100px]" />
+        <div className="dot-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50" />
       </div>
 
-      <motion.div
-        animate={{ opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-gradient-to-br from-cyan-950/20 via-violet-950/20 to-transparent blur-3xl pointer-events-none z-0"
-      />
-
-      <section className="relative z-10 mx-auto max-w-3xl px-6 py-32 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-14 text-center"
-        >
-          <div className="inline-flex items-center justify-center px-4 py-2 border border-cyan-500/30 bg-cyan-500/5 backdrop-blur-md rounded-full mb-6 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-violet-500/10 blur-md" />
-            <span className="text-xs font-bold tracking-widest text-cyan-400 uppercase relative z-10 font-mono">
+      <section className="relative z-10 mx-auto w-full max-w-3xl px-6 py-32">
+        <div className="contact-hero mb-14 text-center">
+          <div className="relative mb-6 inline-flex items-center justify-center overflow-hidden rounded-full border border-blue-500/30 bg-blue-500/5 px-4 py-2 backdrop-blur-md">
+            <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-indigo-500/10 blur-md" />
+            <span className="relative z-10 font-mono text-xs font-bold uppercase tracking-widest text-blue-400">
               <span className="text-emerald-400">&lt;</span>Contact<span className="text-emerald-400">/&gt;</span>
             </span>
           </div>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg pb-2 font-mono">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-violet-400">Get in Touch</span>
+          <h1 className="mb-6 text-5xl font-extrabold tracking-tight drop-shadow-lg md:text-6xl lg:text-7xl">
+            <span className="bg-linear-to-r from-blue-400 via-white to-indigo-400 bg-clip-text text-transparent">Get in Touch</span>
           </h1>
-          <p className="text-muted-foreground/80 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-xl text-lg font-light leading-relaxed text-muted-foreground/80 md:text-xl">
             Have a project in mind? Let&apos;s build something amazing together.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
+        <form
           onSubmit={handleFormSubmission}
-          className="rounded-3xl border border-white/10 bg-black/40 backdrop-blur-2xl p-8 sm:p-12 shadow-2xl relative overflow-hidden group/form"
+          className="contact-form relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-8 shadow-2xl backdrop-blur-2xl sm:p-12"
         >
-          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/[0.03] via-transparent to-violet-500/[0.03] pointer-events-none" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-blue-500/[0.03] via-transparent to-indigo-500/[0.03]" />
 
-          <div className="absolute top-0 left-0 right-0 h-10 bg-white/5 flex items-center px-4 gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500/60" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-            <div className="w-3 h-3 rounded-full bg-green-500/60" />
-            <div className="ml-auto text-xs text-white/30 font-mono">contact.tsx</div>
+          <div className="absolute top-0 left-0 right-0 flex h-10 items-center gap-2 bg-white/5 px-4">
+            <div className="h-3 w-3 rounded-full bg-red-500/60" />
+            <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
+            <div className="h-3 w-3 rounded-full bg-green-500/60" />
+            <div className="ml-auto font-mono text-xs text-white/30">contact.tsx</div>
           </div>
 
-          <div className="space-y-6 relative z-10 mt-4">
-            <div className="absolute -left-3 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/30 via-violet-500/30 to-transparent" />
+          <div className="relative z-10 mt-4 space-y-6">
+            <div className="absolute -left-3 top-0 bottom-0 w-px bg-linear-to-b from-blue-500/30 via-indigo-500/30 to-transparent" />
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid gap-6 md:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-cyan-400 tracking-wide ml-4 font-mono flex items-center gap-2">
-                  <span className="text-violet-400">{">"}</span>
+                <label className="ml-4 flex items-center gap-2 font-mono text-sm font-semibold tracking-wide text-blue-400">
+                  <span className="text-indigo-400">{">"}</span>
                   <span>name</span>
                   <span className="text-emerald-400">:</span>
                 </label>
-                <div className="relative group">
-                  <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-cyan-500/20 to-violet-500/20 blur opacity-0 group-focus-within:opacity-50 transition duration-300" />
+                <div className="group relative">
+                  <div className="absolute -inset-0.5 rounded-lg bg-linear-to-r from-blue-500/20 to-indigo-500/20 opacity-0 blur transition duration-300 group-focus-within:opacity-50" />
                   <input
                     name="name"
                     required
                     type="text"
                     placeholder="your_name"
                     disabled={isSending}
-                    className="relative w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 transition-all font-mono focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="relative w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 font-mono transition-all focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-cyan-400 tracking-wide ml-4 font-mono flex items-center gap-2">
-                  <span className="text-violet-400">{">"}</span>
+                <label className="ml-4 flex items-center gap-2 font-mono text-sm font-semibold tracking-wide text-blue-400">
+                  <span className="text-indigo-400">{">"}</span>
                   <span>email</span>
                   <span className="text-emerald-400">:</span>
                 </label>
-                <div className="relative group">
-                  <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-cyan-500/20 to-violet-500/20 blur opacity-0 group-focus-within:opacity-50 transition duration-300" />
+                <div className="group relative">
+                  <div className="absolute -inset-0.5 rounded-lg bg-linear-to-r from-blue-500/20 to-indigo-500/20 opacity-0 blur transition duration-300 group-focus-within:opacity-50" />
                   <input
                     name="email"
                     required
                     type="email"
                     placeholder="email@example.com"
                     disabled={isSending}
-                    className="relative w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 transition-all font-mono focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="relative w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 font-mono transition-all focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-cyan-400 tracking-wide ml-4 font-mono flex items-center gap-2">
-                <span className="text-violet-400">{">"}</span>
+              <label className="ml-4 flex items-center gap-2 font-mono text-sm font-semibold tracking-wide text-blue-400">
+                <span className="text-indigo-400">{">"}</span>
                 <span>message</span>
                 <span className="text-emerald-400">:</span>
               </label>
-              <div className="relative group">
-                <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-cyan-500/20 to-violet-500/20 blur opacity-0 group-focus-within:opacity-50 transition duration-300" />
+              <div className="group relative">
+                <div className="absolute -inset-0.5 rounded-lg bg-linear-to-r from-blue-500/20 to-indigo-500/20 opacity-0 blur transition duration-300 group-focus-within:opacity-50" />
                 <textarea
                   name="message"
                   rows={5}
                   placeholder={`// Write your message here...`}
                   disabled={isSending}
-                  className="relative w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 resize-none transition-all font-mono focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder-white/30 font-mono transition-all focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              ref={buttonRef}
               disabled={handleDisableWhileSending()}
-              className={`relative w-full cursor-pointer overflow-hidden rounded-lg py-4 font-bold tracking-wide transition-all mt-2 flex items-center justify-center gap-3 font-mono
+              className={`relative mt-2 flex w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-lg py-4 font-bold tracking-wide font-mono transition-all
                 ${isSending
-                  ? "bg-white/5 border border-white/10 cursor-not-allowed"
+                  ? "cursor-not-allowed border border-white/10 bg-white/5"
                   : isSuccess
-                    ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-400"
-                    : "bg-gradient-to-r from-cyan-600 to-violet-600 hover:from-cyan-500 hover:to-violet-500 border border-transparent"
+                    ? "border border-emerald-500/50 bg-emerald-500/20 text-emerald-400"
+                    : "border border-transparent bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500"
                 }`}
             >
               {isSending ? (
                 <>
-                  <svg className="animate-spin h-5 w-5 text-white/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 animate-spin text-white/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -200,11 +211,11 @@ const ContactPage = () => {
               )}
             </button>
 
-            <div className="text-center text-xs text-white/30 font-mono">
-              <span className="text-cyan-400/60">const</span> responseTime = <span className="text-yellow-400/60">&quot;usually within 24h&quot;</span>
+            <div className="text-center font-mono text-xs text-white/30">
+              <span className="text-blue-400/60">const</span> responseTime = <span className="text-yellow-400/60">&quot;usually within 24h&quot;</span>
             </div>
           </div>
-        </motion.form>
+        </form>
       </section>
     </main>
   );

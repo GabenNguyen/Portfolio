@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/purity */
 "use client";
-
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -20,7 +19,7 @@ const projects = [
       "OpenAI GPT-OSS 20B/120B",
       "Shadcn",
     ],
-    accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
+    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
   {
     title: "Personal Portfolio",
@@ -36,9 +35,8 @@ const projects = [
       "Shadcn",
       "Toastify",
       "Framer Motion",
-
     ],
-    accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
+    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
   {
     title: "AI Resume Analyser",
@@ -52,66 +50,112 @@ const projects = [
       "Shadcn",
       "Gemini 2.5 Flash",
     ],
-    accent: "from-rose-500/40 via-orange-500/40 to-amber-500/40",
+    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
+  },
+  {
+    title: "TaskMaster (In Development)",
+    subtitle: "An task management app",
+    url: "https://github.com/GabenNguyen/TaskMaster.git",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Shadcn",
+      "FastAPI",
+      "PostgreSQL",
+      "Clerk",
+    ],
+    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
 ];
 
 export default function ProjectPage() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".project-hero > *", {
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.12,
+        });
+
+        gsap.utils.toArray<HTMLElement>(".stagger-item").forEach((el) => {
+          gsap.from(el, {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 88%" },
+          });
+        });
+
+        gsap.to(".orb", {
+          y: "random(-30, 30)",
+          x: "random(-20, 20)",
+          duration: "random(8, 14)",
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          stagger: { each: 0.4, from: "random" },
+        });
+
+        gsap.to(".project-blob-1", {
+          yPercent: -24,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
+        gsap.to(".project-blob-2", {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+        });
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(".project-hero > *, .stagger-item", { opacity: 1, y: 0 });
+      });
+    },
+    { scope: root }
+  );
+
   return (
-    <main className="relative min-h-screen bg-background text-foreground overflow-hidden font-sans">
-      {/* Abstract Glowing Background matching Landing Page */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-600/10 blur-[100px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+    <main ref={root} className="relative min-h-screen overflow-hidden bg-background text-foreground font-sans">
+
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="project-blob-1 absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="project-blob-2 absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-indigo-600/10 blur-[120px]" />
+        <div className="project-blob-1 absolute top-[40%] left-[60%] h-[30%] w-[30%] rounded-full bg-sky-600/8 blur-[100px]" />
+        <div className="dot-grid absolute inset-0 mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50" />
+        {[
+          "top-[15%] left-[10%]",
+          "top-[35%] right-[14%]",
+          "top-[60%] left-[18%]",
+          "top-[78%] right-[20%]",
+        ].map((pos, i) => (
+          <div key={i} className={`orb absolute h-20 w-20 rounded-full bg-blue-500/10 blur-xl dark:bg-indigo-500/10 ${pos}`} />
+        ))}
       </div>
 
-      {/* Floating Orbs mimicking the original blobs */}
-      {[...Array(8)].map((_, index) => (
-        <motion.div
-          suppressHydrationWarning
-          key={index}
-          animate={{ y: [0, 25, 0], x: [0, 15, 0] }}
-          transition={{ repeat: Infinity, duration: 10 + index, delay: index }}
-          className="absolute w-20 h-20 rounded-full bg-indigo-500/10 dark:bg-purple-500/10 blur-xl pointer-events-none z-0"
-          style={{
-            top: `${Math.random() * 90}%`,
-            left: `${Math.random() * 90}%`,
-          }}
-        />
-      ))}
-
-      {/* Content */}
-      <section className="mx-auto max-w-6xl px-6 py-28 relative z-10 w-full">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-20 text-center"
-        >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight drop-shadow-lg pb-2">
-            My Projects
-          </h1>
-          <p className="mt-4 max-w-xl text-lg md:text-xl text-muted-foreground/90 font-light mx-auto">
+      <section className="relative z-10 mx-auto w-full max-w-6xl px-6 py-28">
+        <div className="project-hero mb-20 text-center">
+          <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase">Selected work</span>
+          <h1 className="text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">My Projects</h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg font-light text-muted-foreground md:text-xl">
             Some of my selected work where design, performance, and innovation
             come together.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Projects grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.12 }}
-              whileHover={{ y: -6 }}
-              className="group relative"
-            >
-              {/* Glow border */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          {projects.map((project) => (
+            <div key={project.title} className="stagger-item group relative">
               <div
                 className={`absolute -inset-px rounded-4xl bg-linear-to-r ${project.accent} opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100`}
               />
@@ -120,47 +164,36 @@ export default function ProjectPage() {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative flex flex-col h-full rounded-4xl border border-white/10 bg-white/5 backdrop-blur-2xl p-8 shadow-2xl transition-all hover:bg-white/10 overflow-hidden"
+                className="relative flex h-full flex-col overflow-hidden rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-2xl transition-all hover:-translate-y-1.5 hover:bg-black/5 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
               >
-                {/* Overlay gradient slide */}
-                <div className="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+                <div className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-tr from-transparent via-blue-500/5 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
 
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4 relative z-10">
-                  <h2 className="text-2xl font-bold text-foreground drop-shadow-sm transition-colors">
-                    {project.title}
-                  </h2>
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 group-hover:border-purple-400/50 group-hover:bg-white/10 transition-colors shrink-0">
-                    <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-purple-300 transition-colors group-hover:rotate-12 group-hover:scale-110" />
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <h2 className="text-2xl font-bold text-foreground transition-colors">{project.title}</h2>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-black/5 transition-colors group-hover:border-blue-400/50 group-hover:bg-blue-500/10 dark:border-white/10 dark:bg-white/5">
+                    <ArrowUpRight className="h-5 w-5 text-gray-400 transition-all group-hover:scale-110 group-hover:rotate-12 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
                   </div>
                 </div>
 
-                {/* Subtitle */}
-                <p className="mt-4 text-muted-foreground/90 text-base font-light grow relative z-10">
-                  {project.subtitle}
-                </p>
+                <p className="relative z-10 mt-4 grow text-base font-light text-muted-foreground">{project.subtitle}</p>
 
-                {/* Tech stack */}
-                <div className="mt-8 flex flex-wrap gap-2 text-xs relative z-10">
+                <div className="relative z-10 mt-8 flex flex-wrap gap-2 text-xs">
                   {project.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1.5 rounded-full bg-black/40 border border-white/5 text-white font-medium tracking-wide shadow-inner"
+                      className="rounded-full border border-black/10 bg-black/40 px-3 py-1.5 font-medium tracking-wide text-foreground shadow-inner dark:border-white/5 dark:bg-black/40"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                {/* Footer */}
-                <div className="mt-8 text-sm font-bold text-purple-400 group-hover:text-pink-400 transition-colors flex items-center gap-2 relative z-10">
+                <div className="relative z-10 mt-8 flex items-center gap-2 text-sm font-bold text-blue-500 transition-colors group-hover:text-indigo-500 dark:text-blue-400">
                   <span>View project</span>
-                  <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
-                    ↗
-                  </span>
+                  <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
