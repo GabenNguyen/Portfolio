@@ -1,14 +1,8 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { BsDownload } from "react-icons/bs";
-
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
 
 import { ModeToggle } from "./ModeToggle";
 import { usePathname } from "next/navigation";
@@ -25,80 +19,109 @@ const navItems = [
 function NavBar() {
   const pathname = usePathname();
   const root = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useGSAP(
     () => {
       gsap.from(".nav-item", {
         opacity: 0,
-        y: -16,
-        duration: 0.6,
+        y: -10,
+        duration: 0.5,
         ease: "power3.out",
-        stagger: 0.07,
-        delay: 0.1,
+        stagger: 0.05,
+        delay: 0.05,
       });
     },
     { scope: root }
   );
 
+  const linkClass = (isActive: boolean) =>
+    cn(
+      "rounded-sm px-1 py-1 text-sm underline-offset-8 transition-colors duration-150",
+      isActive
+        ? "font-semibold text-foreground underline decoration-primary decoration-2"
+        : "text-muted-foreground hover:text-foreground hover:underline"
+    );
+
   return (
-    <nav
-      ref={root}
-      className="fixed top-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 rounded-2xl border border-black/10 bg-white/70 px-3 py-2 backdrop-blur-xl shadow-sm transition-colors dark:border-white/10 dark:bg-black/50 sm:px-4"
-    >
-      <div className="mx-auto flex items-center justify-between gap-4">
-        {/* Logo */}
-        <Link href="/" className="nav-item group flex items-center space-x-2">
-          <span className="text-lg font-bold tracking-tight text-foreground transition-opacity hover:opacity-80 md:text-xl">
-            Gaben<span className="text-blue-500">.</span>NGUYEN
-          </span>
+    <header ref={root} className="sticky top-0 z-50 border-b border-foreground/15 bg-background">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        {/* Wordmark */}
+        <Link href="/" className="nav-item text-lg font-bold tracking-tight md:text-xl" onClick={() => setMenuOpen(false)}>
+          Gaben<span className="text-primary">.</span>Nguyen
         </Link>
 
-        {/* Navigation Links */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="flex items-center gap-1">
-            {navItems.map(({ label, href }) => {
-              const isActive = pathname === href;
-              return (
-                <NavigationMenuItem key={label} className="nav-item">
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={href}
-                      className={cn(
-                        "relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
-                        isActive
-                          ? "bg-blue-500/10 text-blue-600 dark:text-blue-300"
-                          : "text-muted-foreground hover:bg-black/5 hover:text-foreground dark:hover:bg-white/10"
-                      )}
-                    >
-                      {label}
-                      {isActive && (
-                        <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-blue-500" />
-                      )}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
+        {/* Links (desktop) */}
+        <nav aria-label="Main" className="nav-item hidden items-center gap-7 md:flex">
+          {navItems.map(({ label, href }) => {
+            const isActive = pathname === href;
+            return (
+              <Link key={label} href={href} aria-current={isActive ? "page" : undefined} className={linkClass(isActive)}>
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Right Section: Mode Toggle + Download CV button */}
-        <div className="nav-item flex items-center gap-2 sm:gap-3">
+        {/* Right section */}
+        <div className="nav-item flex items-center gap-3">
           <a
             href="/Resume_Ba_Hoa_NGUYEN_New.pdf"
             download
-            className="flex items-center gap-2 rounded-full bg-primary px-3 py-2 font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:opacity-90 active:scale-95 sm:px-4 cursor-pointer"
+            className="hidden items-center gap-2 rounded-md bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-transform duration-150 hover:-translate-y-px active:translate-y-0 active:scale-95 sm:flex"
           >
-            <BsDownload className="h-4 w-4" />
-            <span className="hidden text-sm sm:inline">CV</span>
+            <BsDownload className="h-4 w-4" aria-hidden />
+            CV
           </a>
 
-          <div className="flex items-center justify-center rounded-full border border-black/10 bg-black/5 p-0.5 transition-colors hover:bg-black/10 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10">
-            <ModeToggle />
-          </div>
+          <ModeToggle />
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="flex h-9 w-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary md:hidden"
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
-    </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <nav id="mobile-nav" aria-label="Main" className="border-t border-foreground/15 md:hidden">
+          <div className="mx-auto flex w-full max-w-6xl flex-col px-4 py-3 sm:px-6">
+            {navItems.map(({ label, href }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "border-b border-foreground/10 py-3 text-base last:border-b-0",
+                    isActive ? "font-semibold text-foreground" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+            <a
+              href="/Resume_Ba_Hoa_NGUYEN_New.pdf"
+              download
+              className="mt-3 flex items-center justify-center gap-2 rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-primary-foreground sm:hidden"
+            >
+              <BsDownload className="h-4 w-4" aria-hidden />
+              Download CV
+            </a>
+          </div>
+        </nav>
+      )}
+    </header>
   );
 }
 

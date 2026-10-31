@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 const frontEndSkills = [
@@ -26,7 +27,7 @@ const softSkills = [
   "Resilience",
   "Adaptive",
   "Excellent Time Management",
-  "Billingual communicator (Vietnamese and English)",
+  "Bilingual communicator (Vietnamese and English)",
 ];
 
 const experiences = [
@@ -42,8 +43,8 @@ const experiences = [
       "Managed 10+ tutoring sessions weekly through disciplined organisation.",
     ],
     achievement: [
-      "Signiﬁcantly improved students’ English skills, with many achieving 9 out of 10 in high school exams.",
-      "Supported students to attain top results in the Cambridge FLYERS English proﬁciency test, with many scoring 4 out 5 across all sections.",
+      "Significantly improved students' English skills, with many achieving 9 out of 10 in high school exams.",
+      "Supported students to attain top results in the Cambridge FLYERS English proficiency test, with many scoring 4 out 5 across all sections.",
     ],
   },
 ];
@@ -90,6 +91,13 @@ const hobbies = [
   "Video Editing",
 ];
 
+const skillGroups = [
+  { title: "Frontend", items: frontEndSkills },
+  { title: "Backend", items: backEndSkills },
+  { title: "Operating Systems", items: operatingSystems },
+  { title: "Other tools", items: otherTools },
+];
+
 const AboutPage = () => {
   const root = useRef<HTMLElement>(null);
 
@@ -99,41 +107,20 @@ const AboutPage = () => {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from(".about-hero > *", {
           opacity: 0,
-          y: 24,
-          duration: 0.7,
+          y: 20,
+          duration: 0.6,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: 0.1,
         });
 
         gsap.utils.toArray<HTMLElement>(".stagger-item").forEach((el) => {
           gsap.from(el, {
             opacity: 0,
-            y: 36,
-            duration: 0.8,
+            y: 28,
+            duration: 0.7,
             ease: "power3.out",
             scrollTrigger: { trigger: el, start: "top 88%" },
           });
-        });
-
-        gsap.to(".orb", {
-          y: "random(-30, 30)",
-          x: "random(-20, 20)",
-          duration: "random(8, 14)",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          stagger: { each: 0.4, from: "random" },
-        });
-
-        gsap.to(".about-blob-1", {
-          yPercent: -24,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-        });
-        gsap.to(".about-blob-2", {
-          yPercent: 18,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
         });
       });
 
@@ -145,211 +132,176 @@ const AboutPage = () => {
   );
 
   return (
-    <main ref={root} className="relative min-h-screen overflow-hidden bg-background text-foreground font-sans">
+    <main id="main" ref={root} className="min-h-screen text-foreground">
+      <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
 
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="about-blob-1 absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
-        <div className="about-blob-2 absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-indigo-600/10 blur-[120px]" />
-        <div className="about-blob-1 absolute top-[40%] left-[60%] h-[30%] w-[30%] rounded-full bg-sky-600/8 blur-[100px]" />
-        <div className="dot-grid absolute inset-0 mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50" />
-        {[
-          "top-[12%] left-[8%]",
-          "top-[28%] right-[12%]",
-          "top-[55%] left-[15%]",
-          "top-[70%] right-[18%]",
-          "top-[40%] left-[45%]",
-          "top-[85%] left-[30%]",
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className={`orb absolute h-20 w-20 rounded-full bg-blue-500/10 blur-xl dark:bg-indigo-500/10 ${pos}`}
-          />
-        ))}
-      </div>
-
-      <section className="relative z-10 mx-auto w-full max-w-4xl px-4 py-28">
-        <div className="about-hero mb-12 text-center">
-          <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase">Get to know me</span>
-          <h1 className="text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">About Me</h1>
-        </div>
-
-        {/* Profile card */}
-        <div className="stagger-item rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
-          <h2 className="mb-4 text-3xl font-bold">Professional Profile</h2>
-          <p className="text-lg font-light leading-relaxed">
-            Motivated Information Technology student, currently pursuing the Bachelor of Information Technology at the
-            Adelaide University, with hands-on experience building production-grade web applications using Next.js/React,
-            TypeScript, Tailwind CSS and AI APIs. Rapidly adapts to new technologies and frameworks, consistently
-            delivering scalable, high-performance solutions in fast-paced development environments. Delivers user-focused
-            solutions that improve outcomes, combining strong communication and problem-solving to translate complex
-            requirements into clear, effective results across both technical and client-facing environments.
+        {/* Header */}
+        <header className="about-hero">
+          <h1 className="text-5xl font-bold md:text-6xl">About me</h1>
+          <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
+            Motivated Information Technology student, currently pursuing the Bachelor of Information
+            Technology at the Adelaide University, with hands-on experience building production-grade
+            web applications using Next.js/React, TypeScript, Tailwind CSS and AI APIs. Rapidly adapts
+            to new technologies and frameworks, consistently delivering scalable, high-performance
+            solutions in fast-paced development environments. Delivers user-focused solutions that
+            improve outcomes, combining strong communication and problem-solving to translate complex
+            requirements into clear, effective results across both technical and client-facing
+            environments.
           </p>
-        </div>
+        </header>
 
-        {/* Soft Skills */}
-        <div className="stagger-item mt-12 text-left">
-          <h2 className="mb-6 text-2xl font-bold">Soft Skills</h2>
-          <div className="flex flex-wrap gap-3">
+        {/* Soft skills */}
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Soft skills</h2>
+          <div className="mt-5 flex flex-wrap gap-2">
             {softSkills.map((skill) => (
               <span
                 key={skill}
-                className="cursor-default rounded-full border border-black/10 bg-black/3 px-5 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-blue-500/50 hover:bg-blue-500/10 dark:border-white/10 dark:bg-white/5 md:text-base"
+                className="rounded-sm border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground"
               >
                 {skill}
               </span>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Technical Skills */}
-        <div className="stagger-item mt-12 text-left">
-          <h2 className="mb-6 text-2xl font-bold">Technical Skills</h2>
-
-          <SkillGroup title="Frontend" items={frontEndSkills} tint="border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-300" />
-          <SkillGroup title="Backend" items={backEndSkills} tint="border-indigo-500/40 bg-indigo-500/10 text-indigo-600 dark:text-indigo-300" />
-          <SkillGroup title="Operating System" items={operatingSystems} tint="border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-300" />
-          <SkillGroup title="Other tools" items={otherTools} tint="border-cyan-500/40 bg-cyan-500/10 text-cyan-600 dark:text-cyan-300" />
-        </div>
+        {/* Technical skills */}
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Technical skills</h2>
+          <dl className="mt-5 border-t border-foreground/15">
+            {skillGroups.map(({ title, items }) => (
+              <div key={title} className="grid gap-2 border-b border-foreground/15 py-5 sm:grid-cols-12 sm:gap-6">
+                <dt className="text-sm font-semibold sm:col-span-4">{title}</dt>
+                <dd className="flex flex-wrap gap-2 sm:col-span-8">
+                  {items.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
         {/* Education */}
-        <div className="stagger-item mt-12 rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
-          <div className="absolute left-0 top-0 hidden h-px w-full bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
-          <h2 className="mb-6 text-2xl font-bold">Education</h2>
-          <ul className="space-y-6 text-lg font-light text-muted-foreground">
-            <li className="relative pl-6 before:absolute before:top-2 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-blue-500 before:shadow-[0_0_10px_rgba(59,130,246,0.8)]">
-              <span className="text-xl font-semibold text-foreground">Adelaide University</span> –
-              Bachelor of Information Technology
-              <br />
-              <span className="mt-2 block" />
-              GPA: <span className="ml-1 font-bold bg-linear-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">6.18/7.0</span> |
-              Expected Graduation: 2027
-              <br />
-              <span className="mt-2 block" />
-              <span className="mt-1 inline-block rounded-md border border-black/10 bg-black/3 px-3 py-1 font-medium shadow-sm dark:border-white/10 dark:bg-white/5">
-                Recipient of{" "}
-                <span className="font-bold text-blue-500 dark:text-blue-400">
-                  UniSA International Merit Scholarship
-                </span>{" "}
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Education</h2>
+          <ol className="mt-5 border-t border-foreground/15">
+            <li className="border-b border-foreground/15 py-6">
+              <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                <span className="text-xl font-bold">Adelaide University</span>
+                <span className="text-sm text-muted-foreground">Current student</span>
+              </div>
+              <p className="mt-1 text-muted-foreground">Bachelor of Information Technology</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                GPA <span className="font-semibold text-foreground">6.18/7.0</span> · Expected graduation 2027
+              </p>
+              <p className="mt-3 inline-block rounded-sm border border-border px-3 py-1.5 text-sm">
+                Recipient of the{" "}
+                <span className="font-semibold text-primary">UniSA International Merit Scholarship</span>{" "}
                 (15% deduction in tuition fee)
-              </span>
+              </p>
             </li>
-            <div className="my-4 h-px w-full bg-black/10 dark:bg-white/10" />
-            <li className="relative pl-6 before:absolute before:top-2 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-indigo-500 before:shadow-[0_0_10px_rgba(99,102,241,0.8)]">
-              <span className="text-xl font-semibold text-foreground">International University</span> –
-              Bachelor of Information Technology, Computer Engineering
-              <br />
-              <span className="mt-2 block" />
-              <span className="text-gray-500 dark:text-gray-400">Cohort: 2022 - 2024</span>
-              <br />
-              <span className="mt-1 block" />
-              GPA: <span className="ml-1 font-bold bg-linear-to-r from-indigo-500 to-sky-500 bg-clip-text text-transparent">2.97 / 4.0</span>
+            <li className="border-b border-foreground/15 py-6">
+              <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                <span className="text-xl font-bold">International University</span>
+                <span className="text-sm text-muted-foreground">2022 - 2024</span>
+              </div>
+              <p className="mt-1 text-muted-foreground">
+                Bachelor of Information Technology, Computer Engineering
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                GPA <span className="font-semibold text-foreground">2.97/4.0</span>
+              </p>
             </li>
-          </ul>
-        </div>
+          </ol>
+        </section>
 
         {/* Experience */}
-        <div className="stagger-item relative mt-12 overflow-hidden rounded-4xl border border-black/10 bg-black/3 p-8 text-left shadow-xl backdrop-blur-xl transition-colors hover:border-blue-500/40 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/40">
-          <div className="pointer-events-none absolute -right-10 -top-10 h-50 w-50 rounded-full bg-blue-500/10 blur-[80px]" />
-          <h2 className="relative z-10 mb-6 text-2xl font-bold">Experience</h2>
-          <ul className="relative z-10 space-y-8">
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Experience</h2>
+          <div className="mt-5 border-t border-foreground/15">
             {experiences.map((exp) => (
-              <li key={exp.title}>
-                <p className="text-xl font-bold">
-                  {exp.title} <span className="text-blue-500 dark:text-blue-400">@ {exp.company}</span>
-                </p>
-                <div className="mt-2 inline-flex items-center justify-center rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs font-semibold tracking-wide dark:border-white/10 dark:bg-white/10">
-                  {exp.duration}
+              <div key={exp.title} className="py-6">
+                <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                  <p className="text-xl font-bold">
+                    {exp.title} <span className="text-primary">@ {exp.company}</span>
+                  </p>
+                  <span className="text-sm text-muted-foreground">{exp.duration}</span>
                 </div>
-                <p className="mt-5 text-lg font-semibold">Key responsibilities</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-base font-light marker:text-blue-500">
+
+                <h3 className="mt-5 font-semibold">Key responsibilities</h3>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-muted-foreground marker:text-primary">
                   {exp.description.map((point, index) => (
                     <li key={index}>{point}</li>
                   ))}
                 </ul>
-                <p className="mt-5 text-lg font-semibold">Achievements</p>
-                <ul className="mt-3 space-y-3 text-base font-light">
+
+                <h3 className="mt-5 font-semibold">Achievements</h3>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-muted-foreground marker:text-primary">
                   {exp.achievement.map((achievement, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-lg leading-5 text-indigo-500">★</span>
-                      <span>{achievement}</span>
-                    </li>
+                    <li key={index}>{achievement}</li>
                   ))}
                 </ul>
-              </li>
+              </div>
             ))}
-          </ul>
-        </div>
+          </div>
+        </section>
 
-        {/* Projects */}
-        <div className="stagger-item mt-12">
-          <h2 className="mb-6 text-2xl font-bold">Projects Preview</h2>
-          <ul className="flex flex-col gap-4">
+        {/* Projects preview */}
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Projects</h2>
+          <ul className="mt-5 border-t border-foreground/15">
             {projects.map((project) => (
-              <li key={project.title}>
-                <a
+              <li key={project.title} className="border-b border-foreground/15">
+                <Link
                   href={project.slug}
-                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-black/3 p-6 backdrop-blur-xl shadow-lg transition-all hover:border-blue-500/50 hover:bg-black/5 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-400/50 dark:hover:bg-white/10 md:flex-row md:items-center md:justify-between"
+                  className="group flex flex-col gap-3 py-6 transition-colors hover:bg-secondary/40 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-blue-500/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                   <div>
-                    <p className="text-xl font-bold text-foreground transition-colors group-hover:text-blue-500 dark:group-hover:text-blue-400">{project.title}</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
+                    <p className="text-lg font-bold underline-offset-4 group-hover:text-primary group-hover:underline">
+                      {project.title}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs font-semibold tracking-wide dark:border-white/5 dark:bg-black/40"
+                          className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-blue-500 transition-colors group-hover:text-indigo-500 dark:text-blue-400 md:mt-0">
-                    <span>View Project</span>
-                    <ArrowUpRight className="text-lg leading-none transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                  </div>
-                </a>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
         {/* Hobbies */}
-        <div className="stagger-item mt-12 text-left">
-          <h2 className="mb-6 text-2xl font-bold">Hobbies &amp; Interests</h2>
-          <div className="flex flex-wrap gap-3">
+        <section className="stagger-item mt-16">
+          <h2 className="text-2xl font-bold">Hobbies &amp; interests</h2>
+          <div className="mt-5 flex flex-wrap gap-2">
             {hobbies.map((hobby) => (
               <span
                 key={hobby}
-                className="cursor-pointer rounded-full border border-black/10 bg-black/3 px-5 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-indigo-500/50 hover:bg-indigo-500/10 dark:border-white/10 dark:bg-white/5 md:text-base"
+                className="rounded-sm border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground"
               >
                 {hobby}
               </span>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+
+      </article>
     </main>
   );
 };
-
-function SkillGroup({ title, items, tint }: { title: string; items: string[]; tint: string }) {
-  return (
-    <div className="mb-8">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-blue-500">{title}</p>
-      <div className="flex flex-wrap gap-3">
-        {items.map((skill) => (
-          <span
-            key={skill}
-            className={`cursor-default rounded-xl border px-5 py-2.5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:scale-[1.03] dark:bg-white/5 md:text-base ${tint}`}
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default AboutPage;

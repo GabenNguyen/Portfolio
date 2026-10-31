@@ -19,7 +19,6 @@ const projects = [
       "OpenAI GPT-OSS 20B/120B",
       "Shadcn",
     ],
-    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
   {
     title: "Personal Portfolio",
@@ -36,7 +35,6 @@ const projects = [
       "Toastify",
       "Framer Motion",
     ],
-    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
   {
     title: "AI Resume Analyser",
@@ -50,11 +48,10 @@ const projects = [
       "Shadcn",
       "Gemini 2.5 Flash",
     ],
-    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
   {
-    title: "TaskMaster (In Development)",
-    subtitle: "An task management app",
+    title: "TaskMaster",
+    subtitle: "A task management app, in development",
     url: "https://github.com/GabenNguyen/TaskMaster.git",
     stack: [
       "Next.js",
@@ -66,7 +63,6 @@ const projects = [
       "PostgreSQL",
       "Clerk",
     ],
-    accent: "from-blue-500/40 via-indigo-500/40 to-sky-500/40",
   },
 ];
 
@@ -79,41 +75,20 @@ export default function ProjectPage() {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from(".project-hero > *", {
           opacity: 0,
-          y: 24,
-          duration: 0.7,
+          y: 20,
+          duration: 0.6,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: 0.1,
         });
 
         gsap.utils.toArray<HTMLElement>(".stagger-item").forEach((el) => {
           gsap.from(el, {
             opacity: 0,
-            y: 40,
-            duration: 0.8,
+            y: 28,
+            duration: 0.7,
             ease: "power3.out",
             scrollTrigger: { trigger: el, start: "top 88%" },
           });
-        });
-
-        gsap.to(".orb", {
-          y: "random(-30, 30)",
-          x: "random(-20, 20)",
-          duration: "random(8, 14)",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          stagger: { each: 0.4, from: "random" },
-        });
-
-        gsap.to(".project-blob-1", {
-          yPercent: -24,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-        });
-        gsap.to(".project-blob-2", {
-          yPercent: 18,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
         });
       });
 
@@ -125,77 +100,55 @@ export default function ProjectPage() {
   );
 
   return (
-    <main ref={root} className="relative min-h-screen overflow-hidden bg-background text-foreground font-sans">
+    <main id="main" ref={root} className="min-h-screen text-foreground">
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
 
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="project-blob-1 absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
-        <div className="project-blob-2 absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-indigo-600/10 blur-[120px]" />
-        <div className="project-blob-1 absolute top-[40%] left-[60%] h-[30%] w-[30%] rounded-full bg-sky-600/8 blur-[100px]" />
-        <div className="dot-grid absolute inset-0 mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-50" />
-        {[
-          "top-[15%] left-[10%]",
-          "top-[35%] right-[14%]",
-          "top-[60%] left-[18%]",
-          "top-[78%] right-[20%]",
-        ].map((pos, i) => (
-          <div key={i} className={`orb absolute h-20 w-20 rounded-full bg-blue-500/10 blur-xl dark:bg-indigo-500/10 ${pos}`} />
-        ))}
-      </div>
-
-      <section className="relative z-10 mx-auto w-full max-w-6xl px-6 py-28">
-        <div className="project-hero mb-20 text-center">
-          <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase">Selected work</span>
-          <h1 className="text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">My Projects</h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg font-light text-muted-foreground md:text-xl">
-            Some of my selected work where design, performance, and innovation
-            come together.
+        {/* Header */}
+        <div className="project-hero max-w-[54ch]">
+          <h1 className="text-5xl font-bold md:text-6xl">Projects</h1>
+          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+            Selected work where design, performance, and AI come together. Each project links to its
+            source on GitHub.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-          {projects.map((project) => (
-            <div key={project.title} className="stagger-item group relative">
-              <div
-                className={`absolute -inset-px rounded-4xl bg-linear-to-r ${project.accent} opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100`}
-              />
-
+        {/* Index */}
+        <ol className="mt-14 border-t border-foreground/15">
+          {projects.map((project, index) => (
+            <li key={project.title} className="stagger-item border-b border-foreground/15">
               <Link
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative flex h-full flex-col overflow-hidden rounded-4xl border border-black/10 bg-black/3 p-8 shadow-xl backdrop-blur-2xl transition-all hover:-translate-y-1.5 hover:bg-black/5 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                className="group grid gap-4 py-8 transition-colors hover:bg-secondary/40 md:grid-cols-12 md:gap-8 md:px-2"
               >
-                <div className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-tr from-transparent via-blue-500/5 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+                <div className="font-display text-sm font-bold text-muted-foreground tabular-nums md:col-span-1">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
 
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <h2 className="text-2xl font-bold text-foreground transition-colors">{project.title}</h2>
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-black/5 transition-colors group-hover:border-blue-400/50 group-hover:bg-blue-500/10 dark:border-white/10 dark:bg-white/5">
-                    <ArrowUpRight className="h-5 w-5 text-gray-400 transition-all group-hover:scale-110 group-hover:rotate-12 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
+                <div className="md:col-span-7">
+                  <h2 className="flex items-center gap-3 text-2xl font-bold underline-offset-4 md:text-3xl">
+                    <span className="group-hover:text-primary group-hover:underline">{project.title}</span>
+                    <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </h2>
+                  <p className="mt-2 max-w-[52ch] text-muted-foreground">{project.subtitle}</p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
-
-                <p className="relative z-10 mt-4 grow text-base font-light text-muted-foreground">{project.subtitle}</p>
-
-                <div className="relative z-10 mt-8 flex flex-wrap gap-2 text-xs">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-black/10 bg-black/40 px-3 py-1.5 font-medium tracking-wide text-foreground shadow-inner dark:border-white/5 dark:bg-black/40"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="relative z-10 mt-8 flex items-center gap-2 text-sm font-bold text-blue-500 transition-colors group-hover:text-indigo-500 dark:text-blue-400">
-                  <span>View project</span>
-                  <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                </div>
               </Link>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
+
       </section>
     </main>
   );

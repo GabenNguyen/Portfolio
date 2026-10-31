@@ -5,19 +5,19 @@ import { motion } from "framer-motion";
 export default function TypingIndicator() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10, scale: 0.9 }}
+      initial={{ opacity: 0, y: 8, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.25 }}
       className="flex justify-start"
     >
-      <div className="bg-zinc-800/80 border border-zinc-700/50 p-3 rounded-2xl rounded-tl-sm flex gap-1.5 items-center backdrop-blur-sm">
+      <div className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3.5 py-3">
         {[0, 1, 2].map((dot) => (
           <motion.span
             key={dot}
-            className="w-1.5 h-1.5 bg-blue-500 rounded-full"
+            className="h-1.5 w-1.5 rounded-full bg-primary"
             animate={{
               y: [0, -4, 0],
-              opacity: [0.5, 1, 0.5],
+              opacity: [0.4, 1, 0.4],
             }}
             transition={{
               duration: 0.6,
