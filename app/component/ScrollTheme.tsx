@@ -2,21 +2,16 @@
 
 import { useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
-/* Section themes only run in "system" mode; an explicit light/dark choice still wins. */
+/* Scroll progress only. The theme stays under the user's control. */
 export default function ScrollTheme({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const { theme } = useTheme();
 
   useGSAP(
     () => {
-      const el = ref.current;
-      if (!el) return;
-
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -28,28 +23,9 @@ export default function ScrollTheme({ children }: { children: React.ReactNode })
         });
       });
 
-      if (theme === "system") {
-        const apply = (mode: string | undefined) => {
-          el.classList.toggle("dark", mode === "dark");
-          el.classList.toggle("light", mode !== "dark");
-        };
-
-        gsap.utils.toArray<HTMLElement>("[data-scroll-theme]", el).forEach((section) => {
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top 55%",
-            end: "bottom 45%",
-            onEnter: () => apply(section.dataset.scrollTheme),
-            onEnterBack: () => apply(section.dataset.scrollTheme),
-          });
-        });
-      } else {
-        el.classList.remove("dark", "light");
-      }
-
       return () => mm.revert();
     },
-    { dependencies: [pathname, theme], scope: ref }
+    { dependencies: [pathname], scope: ref }
   );
 
   return (

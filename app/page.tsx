@@ -72,7 +72,7 @@ const HomePage = () => {
       </div>
 
       {/* Compact intro — the work starts immediately below */}
-      <section data-scroll-theme="light" className="mx-auto w-full max-w-6xl px-4 pt-12 pb-14 sm:px-6 lg:px-8 lg:pt-16 lg:pb-20">
+      <section className="mx-auto w-full max-w-6xl px-4 pt-12 pb-14 sm:px-6 lg:px-8 lg:pt-16 lg:pb-20">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-8">
             <p className="hero-role mono-meta">{t("home.role")}</p>
@@ -133,7 +133,7 @@ const HomePage = () => {
       </section>
 
       {/* Work — the main event */}
-      <section data-scroll-theme="dark" className="border-t border-foreground/15">
+      <section className="border-t border-foreground/15">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="showcase">
             <p className="mono-meta">{t("home.featured")}</p>
@@ -250,7 +250,7 @@ const HomePage = () => {
       </section>
 
       {/* Toolkit */}
-      <section data-scroll-theme="light" className="border-t border-foreground/15">
+      <section className="border-t border-foreground/15">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="mb-8 flex items-end justify-between gap-6">
             <h2 className="text-3xl font-semibold md:text-4xl">{t("home.toolkit")}</h2>
@@ -287,7 +287,7 @@ const HomePage = () => {
       </section>
 
       {/* Closing */}
-      <section data-scroll-theme="dark" className="border-t border-foreground/15">
+      <section className="border-t border-foreground/15">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-[46ch]">
             <h2 className="text-4xl leading-[1.08] font-semibold tracking-tight md:text-5xl">

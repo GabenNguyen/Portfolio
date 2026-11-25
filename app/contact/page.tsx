@@ -87,7 +87,7 @@ const ContactPage = () => {
     "w-full rounded-md border border-input bg-background px-3.5 py-3 text-base text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <main id="main" ref={root} data-scroll-theme="light" className="min-h-screen text-foreground">
+    <main id="main" ref={root} className="min-h-screen text-foreground">
       <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
 
         {/* Header */}

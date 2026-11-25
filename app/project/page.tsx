@@ -84,7 +84,7 @@ export default function ProjectPage() {
   );
 
   return (
-    <main id="main" ref={root} data-scroll-theme="dark" className="min-h-screen text-foreground">
+    <main id="main" ref={root} className="min-h-screen text-foreground">
       <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="project-hero max-w-[54ch]">
           <p className="mono-meta">{t("project.indexLabel")}</p>

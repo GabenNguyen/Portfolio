@@ -90,7 +90,7 @@ const AboutPage = () => {
   );
 
   return (
-    <main id="main" ref={root} data-scroll-theme="light" className="min-h-screen text-foreground">
+    <main id="main" ref={root} className="min-h-screen text-foreground">
       <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
 
         <header className="about-hero">
