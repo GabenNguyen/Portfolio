@@ -1,38 +1,46 @@
-"use client"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { useEffect, useState } from "react";
+import { Monitor, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { useI18n } from "./LanguageProvider";
+
+const options = [
+  { value: "light", key: "theme.light", icon: Sun },
+  { value: "dark", key: "theme.dark", icon: Moon },
+  { value: "system", key: "theme.system", icon: Monitor },
+] as const;
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
+  const [mounted, setMounted] = useState(false);
+
+  // next-themes reads storage on first client render; keep SSR attributes stable.
+  useEffect(() => setMounted(true), []);
+
+  const isActive = (value: string) => mounted && theme === value;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="cursor-pointer relative" variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
+    <div className="flex items-center gap-0.5 rounded-md border border-input p-0.5" role="group" aria-label={t("theme.label")}>
+      {options.map(({ value, key, icon: Icon }) => (
+        <button
+          key={value}
+          type="button"
+          onClick={() => setTheme(value)}
+          aria-pressed={isActive(value)}
+          aria-label={t(key)}
+          className={cn(
+            "flex h-6 w-6 items-center justify-center rounded-sm transition-[background-color,color,transform] duration-150 active:scale-[0.96] sm:h-7 sm:w-7",
+            isActive(value)
+              ? "bg-secondary text-foreground"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Icon className="h-3.5 w-3.5" aria-hidden />
+        </button>
+      ))}
+    </div>
+  );
 }

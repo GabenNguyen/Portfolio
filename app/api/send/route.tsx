@@ -2,30 +2,51 @@ import ContactNotiEmail from "@/app/component/ContactNotiEmail";
 import { NextResponse, NextRequest } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const NAME = /^[\p{L}\p{M} .'-]+$/u;
+
+const bounded = (value: unknown, max: number): value is string =>
+  typeof value === "string" && value.trim().length > 0 && value.trim().length <= max;
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await req.json();
-
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: "Missing field(s)!" }, { status: 500 });
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") {
+      return NextResponse.json({ error: "Invalid request." }, { status: 400 });
     }
 
-    const data = await resend.emails.send({
+    const { name, email, message } = body as Record<string, unknown>;
+
+    // Name and email land in the subject and Reply-To header; keep them to safe shapes.
+    if (
+      !bounded(name, 100) || !NAME.test(name.trim()) ||
+      !bounded(email, 254) || !EMAIL.test(email.trim()) ||
+      !bounded(message, 5000)
+    ) {
+      return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    }
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error("Contact form email is not configured");
+      return NextResponse.json({ error: "Contact form is unavailable." }, { status: 503 });
+    }
+
+    const resend = new Resend(apiKey);
+    await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
       to: ["nguyenbahoa04@gmail.com"],
-      subject: `Chat request from ${name}`,
-      react: ContactNotiEmail({ name, email, message }),
-      replyTo: email,
+      subject: `Chat request from ${name.trim()}`,
+      react: ContactNotiEmail({ name: name.trim(), email: email.trim(), message: message.trim() }),
+      replyTo: email.trim(),
     });
 
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error(error);
-
+    // Never return the provider's raw response to the caller.
+    return NextResponse.json({ ok: true });
+  } catch {
+    console.error("Contact email delivery failed");
     return NextResponse.json(
-      { error: "Failed to send your message! Please try again" },
+      { error: "Failed to send your message. Please try again." },
       { status: 500 }
     );
   }

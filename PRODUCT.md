@@ -26,7 +26,6 @@ Recruiters, internship/graduate-role hiring managers, and potential collaborator
 
 ## Functional surface (must keep working)
 - Contact form posts to `/api/send` (Resend). **Backend is out of scope for UI changes.**
-- AI chat widget posts to `/api/GenerateAnswer`. **Backend out of scope.**
 - Theme toggle (light / dark / system) via next-themes.
 - CV download link, GitHub/LinkedIn external links.
 

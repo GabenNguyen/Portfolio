@@ -1,57 +1,59 @@
 "use client";
 import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { Button } from "@/components/ui/button";
-import { MoveUpRight, FolderOpen, FileUser, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import profileImg from "@/public/avatar.png";
 import { portfolioData } from "@/config/portfolio-data";
+import { useI18n } from "@/app/component/LanguageProvider";
 
-/* Honest facts drawn from the site's own content (about page + projects) */
-const facts = [
-  { value: "6.18/7.0", label: "GPA, Bachelor of IT" },
-  { value: "2", label: "AI products shipped" },
-  { value: "2027", label: "Expected graduation" },
-  { value: "Open", label: "To internships & grad roles" },
-];
+const { skills, projects, contact } = portfolioData;
+const [featured, second] = projects;
 
 const HomePage = () => {
-  const { skills, projects } = portfolioData;
+  const { t } = useI18n();
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
+      const revealItems = gsap.utils.toArray<HTMLElement>(".showcase, dl > div");
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // One orchestrated entrance for the hero
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.from(".hero-greeting", { opacity: 0, y: 16, duration: 0.5 })
-          .from(".hero-title", { opacity: 0, y: 24, duration: 0.7 }, "-=0.25")
-          .from(".hero-role", { opacity: 0, y: 16, duration: 0.5 }, "-=0.4")
-          .from(".hero-bio", { opacity: 0, y: 16, duration: 0.5 }, "-=0.35")
-          .from(".hero-meta", { opacity: 0, y: 16, duration: 0.5 }, "-=0.35")
-          .from(".hero-cta", { opacity: 0, y: 16, duration: 0.5 }, "-=0.35")
-          .from(".hero-portrait", { opacity: 0, y: 24, duration: 0.8 }, "-=0.7");
+        tl.from(".hero-role", { opacity: 0, y: 14, duration: 0.45 })
+          .from(".hero-title", { opacity: 0, y: 22, duration: 0.65 }, "-=0.25")
+          .from(".hero-lede", { opacity: 0, y: 14, duration: 0.5 }, "-=0.4")
+          .from(".hero-bio", { opacity: 0, y: 14, duration: 0.5 }, "-=0.35")
+          .from(".hero-meta", { opacity: 0, y: 14, duration: 0.5 }, "-=0.35")
+          .from(".hero-cta", { opacity: 0, y: 14, duration: 0.5 }, "-=0.35")
+          .from(".hero-portrait", { opacity: 0, y: 20, duration: 0.7 }, "-=0.65");
 
-        // Scroll reveals for the sections below
-        gsap.utils.toArray<HTMLElement>(".stagger-item").forEach((el) => {
-          gsap.from(el, {
-            opacity: 0,
-            y: 28,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 88%" },
-          });
+        // Slow drift as the portrait leaves the viewport — transform only.
+        gsap.to(".hero-portrait", {
+          yPercent: -6,
+          ease: "none",
+          scrollTrigger: { trigger: ".hero-portrait", start: "top top", end: "bottom top", scrub: 0.6 },
+        });
+
+        // One staggered reveal per group of incoming work/stack rows.
+        gsap.set(revealItems, { opacity: 0, y: 20 });
+        ScrollTrigger.batch(revealItems, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) =>
+            gsap.to(batch, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out", overwrite: true }),
         });
       });
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(
-          ".hero-greeting, .hero-title, .hero-role, .hero-bio, .hero-meta, .hero-cta, .hero-portrait, .stagger-item",
-          { opacity: 1, y: 0 }
-        );
+        gsap.set(".hero-role, .hero-title, .hero-lede, .hero-bio, .hero-meta, .hero-cta, .hero-portrait", {
+          opacity: 1,
+          y: 0,
+        });
+        gsap.set(revealItems, { clearProps: "opacity,transform" });
       });
     },
     { scope: root }
@@ -59,196 +61,223 @@ const HomePage = () => {
 
   return (
     <main id="main" ref={root} className="min-h-screen text-foreground">
+      <div className="border-b border-foreground/15">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
+          <span className="mono-meta">{t("home.portfolioLabel")}</span>
+          <span className="mono-meta flex items-center gap-2 whitespace-nowrap">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-success" aria-hidden />
+            {t("home.available")}
+          </span>
+        </div>
+      </div>
 
-      {/* HERO — the letter opening */}
-      <section className="mx-auto w-full max-w-6xl px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <p className="hero-greeting text-base font-medium text-muted-foreground">Hi, I&apos;m</p>
-
-            <h1 className="hero-title mt-2 text-5xl leading-[1.05] font-bold sm:text-6xl lg:text-[4.5rem]">
-              Ba Hoa Nguyen
+      {/* Compact intro — the work starts immediately below */}
+      <section data-scroll-theme="light" className="mx-auto w-full max-w-6xl px-4 pt-12 pb-14 sm:px-6 lg:px-8 lg:pt-16 lg:pb-20">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-8">
+            <p className="hero-role mono-meta">{t("home.role")}</p>
+            <h1 className="hero-title mt-3 text-[clamp(2.75rem,5vw_+_1rem,4.5rem)] leading-[1.02] font-semibold tracking-[-0.04em]">
+              Ba Hoa Nguyen<span className="text-primary">.</span>
             </h1>
-
-            <p className="hero-role mt-5 text-xl text-muted-foreground sm:text-2xl">
-              IT student building <span className="font-semibold text-foreground">web and AI applications</span>.
+            <p className="hero-lede mt-5 max-w-[52ch] font-display text-xl leading-snug font-medium sm:text-2xl">
+              {t("home.lede")}
             </p>
-
-            <p className="hero-bio mt-6 max-w-[62ch] text-base leading-relaxed text-muted-foreground md:text-lg">
-              I&apos;m a sophomore at{" "}
-              <span className="font-semibold text-foreground">Adelaide University</span>, with a grounding in
-              object-oriented programming and data-driven web applications. Outside class I build performant,
-              user-friendly products with Next.js, React and AI APIs.
+            <p className="hero-bio mt-4 max-w-[62ch] text-base leading-[1.7] text-muted-foreground">
+              {t("home.bio")}
             </p>
-
-            <ul className="hero-meta mt-8 flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
-              <li>Bachelor of IT, Adelaide University</li>
-              <li aria-hidden className="hidden sm:block">·</li>
-              <li>Para Hills, South Australia</li>
-              <li aria-hidden className="hidden sm:block">·</li>
-              <li className="text-foreground">Available for internships and graduate roles</li>
-            </ul>
-
-            <div className="hero-cta mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="hero-meta mt-7 flex flex-wrap gap-2">
+              <span className="chip">{t("common.degree")}</span>
+              <span className="chip">Adelaide University</span>
+              <span className="chip">{t("common.location")}</span>
+            </div>
+            <div className="hero-cta mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link href="/project">
-                <Button
-                  size="lg"
-                  className="group h-12 w-full cursor-pointer gap-2.5 px-7 text-base font-semibold sm:w-auto"
-                >
-                  View projects
-                  <FolderOpen className="h-4.5 w-4.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                <Button size="lg" className="group h-12 w-full cursor-pointer gap-2.5 px-7 text-base font-semibold sm:w-auto">
+                  {t("common.viewProjects")}
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                 </Button>
               </Link>
-
-              <Link href="/about">
+              <Link href="/contact">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="group h-12 w-full cursor-pointer gap-2.5 border-foreground/25 bg-transparent px-7 text-base font-semibold hover:border-foreground/50 sm:w-auto"
+                  className="h-12 w-full cursor-pointer gap-2.5 border-foreground/25 bg-transparent px-7 text-base font-semibold hover:border-foreground/50 sm:w-auto"
                 >
-                  About me
-                  <FileUser className="h-4.5 w-4.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  {t("common.getInTouch")}
+                  <Mail className="h-4 w-4" aria-hidden />
                 </Button>
               </Link>
             </div>
           </div>
 
-          {/* Portrait */}
-          <div className="hero-portrait lg:col-span-5">
-            <figure className="relative mx-auto aspect-4/5 w-full max-w-sm border border-foreground/15 p-1.5 lg:max-w-none">
-              <div className="relative h-full w-full overflow-hidden">
+          <div className="hero-portrait lg:col-span-4">
+            <figure className="relative mx-auto aspect-[4/5] w-full max-w-[18rem] border border-foreground/15 p-1.5 lg:max-w-none">
+              <span className="pointer-events-none absolute -top-px -left-px h-3 w-3 border-t border-l border-primary" aria-hidden />
+              <span className="pointer-events-none absolute -top-px -right-px h-3 w-3 border-t border-r border-primary" aria-hidden />
+              <span className="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-primary" aria-hidden />
+              <span className="pointer-events-none absolute -right-px -bottom-px h-3 w-3 border-r border-b border-primary" aria-hidden />
+              <div className="relative h-full w-full overflow-hidden bg-secondary">
                 <Image
                   src={profileImg}
                   alt="Portrait of Ba Hoa Nguyen"
                   fill
                   priority
-                  sizes="(max-width: 1024px) 80vw, 34vw"
+                  sizes="(max-width: 1024px) 80vw, 28vw"
                   className="object-cover object-[center_20%]"
-                  quality={90}
                 />
               </div>
+              <figcaption className="mono-meta mt-2">Ba Hoa Nguyen / Adelaide</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      {/* FACTS BAND */}
-      <section className="border-y border-foreground/15">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-2 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
-          {facts.map(({ value, label }, i) => (
-            <div
-              key={label}
-              className={`stagger-item py-8 pr-4 ${i % 2 === 1 ? "border-l border-foreground/15 pl-4" : ""} ${
-                i >= 2 ? "border-t border-foreground/15 md:border-t-0" : ""
-              } ${i === 2 ? "md:border-l md:pl-4" : ""}`}
-            >
-              <div className="font-display text-3xl font-bold tracking-tight md:text-4xl">{value}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{label}</div>
+      {/* Work — the main event */}
+      <section data-scroll-theme="dark" className="border-t border-foreground/15">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="showcase">
+            <p className="mono-meta">{t("home.featured")}</p>
+            <div className="mt-3 flex items-end justify-between gap-6">
+              <h2 className="text-3xl font-semibold md:text-4xl">{t("home.whatShipped")}</h2>
+              <Link
+                href="/project"
+                className="group hidden items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline sm:flex"
+              >
+                {t("common.allProjects")}
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+              </Link>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
 
-      {/* SELECTED WORK */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-        <div className="stagger-item mb-10 flex items-end justify-between gap-6">
-          <h2 className="text-3xl font-bold md:text-4xl">Selected work</h2>
-          <Link
-            href="/project"
-            className="group hidden items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline sm:flex"
-          >
-            All projects
-            <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
-          </Link>
-        </div>
-
-        <div className="border-t border-foreground/15">
-          {projects.map((project) => (
-            <article
-              key={project.name}
-              className="stagger-item group border-b border-foreground/15 py-8 transition-colors hover:bg-secondary/40"
-            >
-              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between md:gap-10">
-                <div className="max-w-[64ch]">
-                  <h3 className="text-2xl font-bold">
-                    <Link
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline-offset-4 transition-colors hover:text-primary hover:underline"
-                    >
-                      {project.name}
-                    </Link>
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="flex shrink-0 items-center gap-2">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-md border border-foreground/20 px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-foreground/50 hover:text-foreground"
-                  >
-                    Repository
-                    <MoveUpRight className="h-3.5 w-3.5" />
-                  </a>
-                </div>
+          {/* Featured project: text on one side, real schematic on the other */}
+          <article className="panel showcase mt-8 grid overflow-hidden lg:grid-cols-12">
+            <div className="border-b border-foreground/15 p-6 lg:col-span-7 lg:border-r lg:border-b-0 lg:p-8">
+              <div className="flex items-center gap-3">
+                <span className="mono-meta tabular-nums">01 / 02</span>
+                <span className="mono-meta">{t("common.shipped")}</span>
               </div>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
-                  >
-                    {t}
-                  </span>
+              <h3 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">{featured.name}</h3>
+              <p className="mt-4 max-w-[58ch] text-base leading-[1.7] text-muted-foreground">
+                {featured.description}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {featured.tech.map((tech) => (
+                  <span key={tech} className="chip">{tech}</span>
                 ))}
               </div>
-            </article>
-          ))}
-        </div>
+              <a
+                href={featured.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 inline-flex items-center gap-2 whitespace-nowrap text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                {t("common.viewSource")}
+                <ExternalLink className="h-4 w-4" aria-hidden />
+              </a>
+            </div>
 
-        <Link
-          href="/project"
-          className="group mt-8 flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline sm:hidden"
-        >
-          All projects
-          <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
-        </Link>
+            <div className="p-6 lg:col-span-5 lg:p-8">
+              <p className="mono-meta">{t("home.schematic")}</p>
+              <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+                <div className="flow-node flex flex-1 flex-col">
+                  <span>{t("home.flow.resume")}</span>
+                  <span className="mono-meta mt-1">{t("home.flow.zeroLogin")}</span>
+                </div>
+                <span className="text-center font-mono text-primary sm:text-left" aria-hidden>→</span>
+                <div className="flow-node flex flex-1 flex-col">
+                  <span>{t("home.flow.analysis")}</span>
+                  <span className="mono-meta mt-1">{t("home.flow.under5s")}</span>
+                </div>
+                <span className="text-center font-mono text-primary sm:text-left" aria-hidden>→</span>
+                <div className="flow-node flex flex-1 flex-col">
+                  <span>{t("home.flow.feedback")}</span>
+                  <span className="mono-meta mt-1">{t("home.flow.strengths")}</span>
+                </div>
+              </div>
+              <p className="mono-meta mt-5">{t("home.flow.caption")}</p>
+            </div>
+          </article>
+
+          {/* Second shipped project */}
+          <article className="panel showcase mt-4 p-6 lg:p-8">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-[64ch]">
+                <div className="flex items-center gap-3">
+                  <span className="mono-meta tabular-nums">02 / 02</span>
+                  <span className="mono-meta">{t("common.shipped")}</span>
+                </div>
+                <h3 className="mt-3 text-2xl font-semibold">{second.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {second.description}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {second.tech.map((tech) => (
+                    <span key={tech} className="chip">{tech}</span>
+                  ))}
+                </div>
+              </div>
+              <a
+                href={second.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                {t("common.viewSource")}
+                <ExternalLink className="h-4 w-4" aria-hidden />
+              </a>
+            </div>
+          </article>
+
+          <Link
+            href="/project"
+            className="panel showcase mt-4 flex items-center justify-between gap-4 p-6 transition-colors hover:bg-secondary/40 lg:p-8"
+          >
+            <span>
+              <span className="mono-meta">{t("common.index")}</span>
+              <span className="mt-1 block font-display text-xl font-semibold">{t("home.allFour")}</span>
+            </span>
+            <ArrowUpRight className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          </Link>
+
+          <Link
+            href="/project"
+            className="group mt-6 flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline sm:hidden"
+          >
+            {t("common.allProjects")}
+            <ArrowUpRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </div>
       </section>
 
-      {/* TOOLKIT */}
-      <section className="border-t border-foreground/15">
-        <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-          <h2 className="stagger-item mb-10 text-3xl font-bold md:text-4xl">Toolkit</h2>
+      {/* Toolkit */}
+      <section data-scroll-theme="light" className="border-t border-foreground/15">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <h2 className="text-3xl font-semibold md:text-4xl">{t("home.toolkit")}</h2>
+            <Link
+              href="/about"
+              className="group hidden items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline sm:flex"
+            >
+              {t("common.moreAbout")}
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+            </Link>
+          </div>
 
           <dl className="border-t border-foreground/15">
             {(Object.entries(skills) as [string, string[]][]).map(([category, items]) => (
-              <div
-                key={category}
-                className="stagger-item grid gap-3 border-b border-foreground/15 py-6 md:grid-cols-12 md:gap-6"
-              >
+              <div key={category} className="grid gap-3 border-b border-foreground/15 py-5 md:grid-cols-12 md:gap-6">
                 <dt className="text-sm font-semibold md:col-span-3 lg:col-span-2">
                   {category === "frontend"
-                    ? "Frontend"
+                    ? t("cat.frontend")
                     : category === "backend"
-                      ? "Backend"
+                      ? t("cat.backend")
                       : category === "language"
-                        ? "Languages"
-                        : "Tools"}
+                        ? t("cat.languages")
+                        : t("cat.tools")}
                 </dt>
                 <dd className="flex flex-wrap gap-2 md:col-span-9 lg:col-span-10">
                   {items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
-                    >
-                      {skill}
-                    </span>
+                    <span key={skill} className="chip">{skill}</span>
                   ))}
                 </dd>
               </div>
@@ -257,32 +286,29 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CLOSING */}
-      <section className="border-t border-foreground/15">
-        <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-          <div className="stagger-item max-w-[46ch]">
-            <h2 className="text-4xl font-bold md:text-5xl">Let&apos;s build something together.</h2>
+      {/* Closing */}
+      <section data-scroll-theme="dark" className="border-t border-foreground/15">
+        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="max-w-[46ch]">
+            <h2 className="text-4xl leading-[1.08] font-semibold tracking-tight md:text-5xl">
+              {t("home.closingTitle")}
+            </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Open to internships, collaborations, or a good tech chat.
+              {t("home.closingBody")}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link href="/contact">
                 <Button size="lg" className="h-12 w-full cursor-pointer px-7 text-base font-semibold sm:w-auto">
-                  Get in touch
+                  {t("common.getInTouch")}
                 </Button>
               </Link>
               <a
-                href={portfolioData.contact.linkedin}
+                href={contact.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="whitespace-nowrap px-2 text-sm font-semibold text-primary underline-offset-4 hover:underline"
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-12 w-full cursor-pointer border-foreground/25 bg-transparent px-7 text-base font-semibold hover:border-foreground/50 sm:w-auto"
-                >
-                  LinkedIn
-                </Button>
+                LinkedIn
               </a>
             </div>
           </div>

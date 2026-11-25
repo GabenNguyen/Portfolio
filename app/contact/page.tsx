@@ -5,18 +5,20 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { toast } from "react-toastify";
 import { Send, Check, Loader2 } from "lucide-react";
 import { portfolioData } from "@/config/portfolio-data";
+import { useI18n } from "@/app/component/LanguageProvider";
 
 const { contact } = portfolioData;
 
 const contactDetails = [
-  { label: "Email", value: contact.email, href: `mailto:${contact.email}` },
-  { label: "Phone", value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, "")}` },
-  { label: "Location", value: contact.location, href: null },
+  { key: "contact.email" as const, value: contact.email, href: `mailto:${contact.email}` },
+  { key: "contact.phone" as const, value: contact.phone, href: `tel:${contact.phone.replace(/\s/g, "")}` },
+  { key: "contact.location" as const, value: contact.location, href: null },
   { label: "GitHub", value: "GabenNguyen", href: contact.github },
   { label: "LinkedIn", value: "bahoanguyen", href: contact.linkedin },
 ];
 
 const ContactPage = () => {
+  const { t } = useI18n();
   const [isSending, setIsSending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const root = useRef<HTMLElement>(null);
@@ -27,6 +29,7 @@ const ContactPage = () => {
     const formData = new FormData(form);
 
     setIsSending(true);
+    setIsSuccess(false);
 
     try {
       const res = await fetch("/api/send", {
@@ -41,18 +44,14 @@ const ContactPage = () => {
 
       if (res.ok) {
         setIsSuccess(true);
-        toast.info("Message sent successfully!");
         form.reset();
       } else {
-        toast.error("Failed to send message!");
+        toast.error(t("contact.error"));
       }
     } catch {
-      toast.error("Failed to send message!");
+      toast.error(t("contact.error"));
     } finally {
-      setTimeout(() => {
-        setIsSending(false);
-        setIsSuccess(false);
-      }, 2000);
+      setIsSending(false);
     }
   };
 
@@ -88,31 +87,38 @@ const ContactPage = () => {
     "w-full rounded-md border border-input bg-background px-3.5 py-3 text-base text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <main id="main" ref={root} className="min-h-screen text-foreground">
+    <main id="main" ref={root} data-scroll-theme="light" className="min-h-screen text-foreground">
       <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
 
         {/* Header */}
         <div className="contact-hero max-w-[46ch]">
-          <h1 className="text-5xl font-bold md:text-6xl">Get in touch</h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Have a project in mind, or a role to fill? Send a message and I&apos;ll get back to you.
+          <h1 className="text-[clamp(2.75rem,5vw_+_1rem,4.5rem)] leading-[1.05] font-semibold tracking-[-0.04em]">
+            {t("contact.title")}
+          </h1>
+          <p className="mt-6 max-w-[60ch] text-base leading-[1.7] text-muted-foreground md:text-lg">
+            {t("contact.lede")}
           </p>
         </div>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Form */}
-          <form onSubmit={handleFormSubmission} className="contact-form lg:col-span-7">
+          <form
+            onSubmit={handleFormSubmission}
+            onChange={() => isSuccess && setIsSuccess(false)}
+            className="contact-form lg:col-span-7"
+          >
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-name" className="text-sm font-semibold">
-                  Name
+                  {t("contact.name")}
                 </label>
                 <input
                   id="contact-name"
                   name="name"
                   required
                   type="text"
-                  placeholder="Your name"
+                  autoComplete="name"
+                  placeholder={t("contact.namePlaceholder")}
                   disabled={isSending}
                   className={inputClass}
                 />
@@ -120,14 +126,15 @@ const ContactPage = () => {
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-email" className="text-sm font-semibold">
-                  Email
+                  {t("contact.email")}
                 </label>
                 <input
                   id="contact-email"
                   name="email"
                   required
                   type="email"
-                  placeholder="you@example.com"
+                  autoComplete="email"
+                  placeholder={t("contact.emailPlaceholder")}
                   disabled={isSending}
                   className={inputClass}
                 />
@@ -136,14 +143,14 @@ const ContactPage = () => {
 
             <div className="mt-5 flex flex-col gap-2">
               <label htmlFor="contact-message" className="text-sm font-semibold">
-                Message
+                {t("contact.message")}
               </label>
               <textarea
                 id="contact-message"
                 name="message"
                 rows={7}
                 required
-                placeholder="Write your message here..."
+                placeholder={t("contact.messagePlaceholder")}
                 disabled={isSending}
                 className={`${inputClass} resize-none`}
               />
@@ -152,7 +159,7 @@ const ContactPage = () => {
             <button
               type="submit"
               disabled={isSubmitDisabled}
-              className={`mt-7 flex w-full items-center justify-center gap-2.5 rounded-md px-6 py-3.5 text-base font-semibold transition-all duration-150 sm:w-auto ${
+              className={`mt-7 flex h-12 w-full items-center justify-center gap-2.5 rounded-md px-6 text-base font-semibold transition-[color,background-color,border-color,transform] duration-150 sm:w-auto ${
                 isSubmitDisabled
                   ? "cursor-not-allowed bg-secondary text-muted-foreground"
                   : "bg-primary text-primary-foreground hover:-translate-y-px active:translate-y-0 active:scale-95"
@@ -161,46 +168,53 @@ const ContactPage = () => {
               {isSending ? (
                 <>
                   <Loader2 className="h-4.5 w-4.5 animate-spin" aria-hidden />
-                  Sending...
+                  {t("contact.sending")}
                 </>
               ) : isSuccess ? (
                 <>
                   <Check className="h-4.5 w-4.5" aria-hidden />
-                  Message sent
+                  {t("contact.sent")}
                 </>
               ) : (
                 <>
-                  Send message
+                  {t("contact.send")}
                   <Send className="h-4.5 w-4.5" aria-hidden />
                 </>
               )}
             </button>
 
-            <p className="mt-4 text-sm text-muted-foreground">I usually reply within 24 hours.</p>
+            <p role="status" aria-live="polite" className="mt-4 text-sm text-muted-foreground">
+              {isSuccess ? t("contact.sentReply") : t("contact.reply")}
+            </p>
           </form>
 
           {/* Details */}
           <aside className="contact-details lg:col-span-5">
             <dl className="border-t border-foreground/15">
-              {contactDetails.map(({ label, value, href }) => (
-                <div key={label} className="grid grid-cols-3 gap-4 border-b border-foreground/15 py-4">
-                  <dt className="text-sm font-semibold">{label}</dt>
-                  <dd className="col-span-2 text-sm text-muted-foreground">
-                    {href ? (
-                      <a
-                        href={href}
-                        target={href.startsWith("mailto:") || href.startsWith("tel:") ? undefined : "_blank"}
-                        rel="noopener noreferrer"
-                        className="break-all underline-offset-4 transition-colors hover:text-foreground hover:underline"
-                      >
-                        {value}
-                      </a>
-                    ) : (
-                      value
-                    )}
-                  </dd>
-                </div>
-              ))}
+              {contactDetails.map((item) => {
+                const key = "key" in item ? item.key : undefined;
+                const label = key ? t(key) : item.label;
+                const href = item.href;
+                return (
+                  <div key={label} className="grid grid-cols-3 gap-4 border-b border-foreground/15 py-4">
+                    <dt className="text-sm font-semibold">{label}</dt>
+                    <dd className="col-span-2 font-mono text-sm tabular-nums text-muted-foreground">
+                      {href ? (
+                        <a
+                          href={href}
+                          target={href.startsWith("mailto:") || href.startsWith("tel:") ? undefined : "_blank"}
+                          rel="noopener noreferrer"
+                          className="break-all underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        item.value
+                      )}
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
           </aside>
         </div>
